@@ -64,23 +64,17 @@ def validate_dataset(root: Path) -> None:
     test, test_labels = read_split(annotations / "test.txt")
 
     if len(trainval) != EXPECTED_TRAINVAL:
-        raise RuntimeError(
-            f"Expected {EXPECTED_TRAINVAL} trainval images, found {len(trainval)}."
-        )
+        raise RuntimeError(f"Expected {EXPECTED_TRAINVAL} trainval images, found {len(trainval)}.")
 
     if len(test) != EXPECTED_TEST:
-        raise RuntimeError(
-            f"Expected {EXPECTED_TEST} test images, found {len(test)}."
-        )
+        raise RuntimeError(f"Expected {EXPECTED_TEST} test images, found {len(test)}.")
 
     if trainval & test:
         raise RuntimeError("Trainval and test splits overlap.")
 
     labels = trainval_labels | test_labels
     if len(labels) != EXPECTED_CLASSES:
-        raise RuntimeError(
-            f"Expected {EXPECTED_CLASSES} classes, found {len(labels)}."
-        )
+        raise RuntimeError(f"Expected {EXPECTED_CLASSES} classes, found {len(labels)}.")
 
     expected = trainval | test
     actual = {path.name for path in images.glob("*.jpg")}
@@ -100,8 +94,7 @@ def validate_dataset(root: Path) -> None:
 
     if len(expected) != EXPECTED_IMAGES:
         raise RuntimeError(
-            f"Expected {EXPECTED_IMAGES} images from official splits, "
-            f"found {len(expected)}."
+            f"Expected {EXPECTED_IMAGES} images from official splits, found {len(expected)}."
         )
 
     if missing:
@@ -116,21 +109,15 @@ def validate_dataset(root: Path) -> None:
 
     if missing or extra:
         raise RuntimeError(
-            "The image directory does not exactly match the official "
-            "trainval/test image lists."
+            "The image directory does not exactly match the official trainval/test image lists."
         )
 
-    print(
-        f"Validation passed: {EXPECTED_IMAGES} images, "
-        f"{EXPECTED_CLASSES} classes."
-    )
+    print(f"Validation passed: {EXPECTED_IMAGES} images, {EXPECTED_CLASSES} classes.")
 
 
 def parse_args() -> argparse.Namespace:
     """Parse command-line arguments."""
-    parser = argparse.ArgumentParser(
-        description="Download and validate Oxford-IIIT Pet."
-    )
+    parser = argparse.ArgumentParser(description="Download and validate Oxford-IIIT Pet.")
     parser.add_argument(
         "--root",
         type=Path,
