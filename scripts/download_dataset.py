@@ -79,20 +79,13 @@ def validate_dataset(root: Path) -> None:
         for name in extra:
             print(f"  - {name}")
 
-      if missing or extra:
-        print(
-            "WARNING: The local image directory does not exactly match "
-            "the official trainval/test image lists."
+    if missing:
+        raise RuntimeError(
+            "The image directory is missing images referenced by the "
+            "official trainval/test split files."
         )
-        print(
-            "The missing/extra files will be handled by the dataset "
-            "integrity stage before training."
-        )
-    else:
-        print(
-            f"Validation passed: {EXPECTED_IMAGES} images, "
-            f"{EXPECTED_CLASSES} classes."
-        )
+
+    print(f"Validation passed: {EXPECTED_IMAGES} annotated images, {EXPECTED_CLASSES} classes.")
 
 
 def parse_args() -> argparse.Namespace:
