@@ -15,3 +15,14 @@ The project demonstrates:
 - Prometheus/Grafana monitoring
 - automated retraining with Airflow
 - CI/CD and model quality gates
+
+
+## Quality Checks
+
+The project uses automated testing, linting, formatting, and static type
+checking to establish a deterministic quality baseline.
+
+### Run tests
+
+```bash
+python -m pytest
