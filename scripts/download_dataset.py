@@ -1,7 +1,11 @@
+"""Download and validate the Oxford-IIIT Pet dataset."""
+
 from __future__ import annotations
 
 import argparse
 from pathlib import Path
+
+from torchvision.datasets import OxfordIIITPet
 
 EXPECTED_IMAGES = 7_349
 EXPECTED_CLASSES = 37
@@ -13,21 +17,40 @@ DATASET_NAME = "Oxford-IIIT Pet"
 DATASET_URL = "https://www.robots.ox.ac.uk/~vgg/data/pets/"
 
 
-def read_split_names(annotation_file: Path) -> set[str]:
-    """Read image names from an Oxford-IIIT Pet split file."""
-    names: set[str] = set()
+def read_split(annotation_file: Path) -> tuple[set[str], set[int]]:
+    """Read image IDs and 1-based class labels from an Oxford-IIIT Pet split."""
+    image_names: set[str] = set()
+    labels: set[int] = set()
 
     for line in annotation_file.read_text(encoding="utf-8").splitlines():
         line = line.strip()
         if not line:
             continue
-        names.add(f"{line.split()[0]}.jpg")
 
-    return names
+        image_id, label, *_ = line.split()
+        image_names.add(f"{image_id}.jpg")
+        labels.add(int(label))
+
+    return image_names, labels
+
+
+def download_dataset(root: Path) -> None:
+    """Download the official dataset using torchvision's pinned resources."""
+    root.mkdir(parents=True, exist_ok=True)
+
+    for split in SPLITS:
+        print(f"Preparing Oxford-IIIT Pet split: {split}")
+        dataset = OxfordIIITPet(
+            root=str(root),
+            split=split,
+            target_types="category",
+            download=True,
+        )
+        print(f"  {split}: {len(dataset)} samples")
 
 
 def validate_dataset(root: Path) -> None:
-    """Validate the downloaded Oxford-IIIT Pet dataset."""
+    """Validate the official Oxford-IIIT Pet image and annotation lists."""
     annotations = root / "annotations"
     images = root / "images"
 
@@ -37,17 +60,27 @@ def validate_dataset(root: Path) -> None:
     if not images.is_dir():
         raise RuntimeError(f"Missing images directory: {images}")
 
-    trainval = read_split_names(annotations / "trainval.txt")
-    test = read_split_names(annotations / "test.txt")
+    trainval, trainval_labels = read_split(annotations / "trainval.txt")
+    test, test_labels = read_split(annotations / "test.txt")
 
     if len(trainval) != EXPECTED_TRAINVAL:
-        raise RuntimeError(f"Expected {EXPECTED_TRAINVAL} trainval images, found {len(trainval)}.")
+        raise RuntimeError(
+            f"Expected {EXPECTED_TRAINVAL} trainval images, found {len(trainval)}."
+        )
 
     if len(test) != EXPECTED_TEST:
-        raise RuntimeError(f"Expected {EXPECTED_TEST} test images, found {len(test)}.")
+        raise RuntimeError(
+            f"Expected {EXPECTED_TEST} test images, found {len(test)}."
+        )
 
     if trainval & test:
         raise RuntimeError("Trainval and test splits overlap.")
+
+    labels = trainval_labels | test_labels
+    if len(labels) != EXPECTED_CLASSES:
+        raise RuntimeError(
+            f"Expected {EXPECTED_CLASSES} classes, found {len(labels)}."
+        )
 
     expected = trainval | test
     actual = {path.name for path in images.glob("*.jpg")}
@@ -61,12 +94,14 @@ def validate_dataset(root: Path) -> None:
     print(f"Test images: {len(test)}")
     print(f"Expected images: {len(expected)}")
     print(f"Actual images: {len(actual)}")
+    print(f"Classes: {len(labels)}")
     print(f"Missing images: {len(missing)}")
     print(f"Extra images: {len(extra)}")
 
     if len(expected) != EXPECTED_IMAGES:
         raise RuntimeError(
-            f"Expected {EXPECTED_IMAGES} images from official splits, found {len(expected)}."
+            f"Expected {EXPECTED_IMAGES} images from official splits, "
+            f"found {len(expected)}."
         )
 
     if missing:
@@ -79,31 +114,46 @@ def validate_dataset(root: Path) -> None:
         for name in extra:
             print(f"  - {name}")
 
-    if missing:
+    if missing or extra:
         raise RuntimeError(
-            "The image directory is missing images referenced by the "
-            "official trainval/test split files."
+            "The image directory does not exactly match the official "
+            "trainval/test image lists."
         )
 
-    print(f"Validation passed: {EXPECTED_IMAGES} annotated images, {EXPECTED_CLASSES} classes.")
+    print(
+        f"Validation passed: {EXPECTED_IMAGES} images, "
+        f"{EXPECTED_CLASSES} classes."
+    )
 
 
 def parse_args() -> argparse.Namespace:
     """Parse command-line arguments."""
-    parser = argparse.ArgumentParser(description="Validate the Oxford-IIIT Pet dataset.")
+    parser = argparse.ArgumentParser(
+        description="Download and validate Oxford-IIIT Pet."
+    )
     parser.add_argument(
         "--root",
         type=Path,
-        default=Path("data/raw/oxford-iiit-pet"),
-        help="Oxford-IIIT Pet dataset root.",
+        default=Path("data/raw"),
+        help="Parent directory used by torchvision for the dataset.",
+    )
+    parser.add_argument(
+        "--download",
+        action="store_true",
+        help="Download the official dataset before validation.",
     )
     return parser.parse_args()
 
 
 def main() -> None:
-    """Run dataset validation."""
+    """Run dataset download when requested, then validate it."""
     args = parse_args()
-    validate_dataset(args.root)
+    dataset_root = args.root / "oxford-iiit-pet"
+
+    if args.download:
+        download_dataset(args.root)
+
+    validate_dataset(dataset_root)
 
 
 if __name__ == "__main__":

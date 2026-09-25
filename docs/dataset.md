@@ -1,13 +1,5 @@
 # Dataset
 
-This document will describe the Oxford-IIIT Pet dataset, dataset acquisition,
-fixed train/validation/test splits, the 37-class label mapping, manifest format,
-validation rules, and corruption generation process.
-
-Detailed dataset documentation will be completed as the data pipeline is implemented.
-
-# Dataset
-
 ## Oxford-IIIT Pet
 
 The final project Track C uses the Oxford-IIIT Pet dataset.
@@ -19,9 +11,7 @@ The project handbook specifies:
 - roughly 200 images per class
 - approximately 800 MB
 
-The handbook specifies using the torchvision download mechanism:
-
-`torchvision.datasets.OxfordIIITPet(download=True)`
+The official Oxford VGG page provides the dataset as `images.tar.gz` and `annotations.tar.gz`. The project uses the torchvision acquisition mechanism required by the handbook. Torchvision pins the two official resources by MD5 and extracts them under `oxford-iiit-pet`.
 
 ### Dataset source
 
@@ -33,26 +23,49 @@ Torchvision dataset implementation:
 
 https://docs.pytorch.org/vision/main/generated/torchvision.datasets.OxfordIIITPet.html
 
+### Expected split sizes
+
+The official annotation files contain:
+
+- `trainval.txt`: 3,680 images
+- `test.txt`: 3,669 images
+- total: 7,349 images
+
+The test split must remain protected from training and tuning workflows. The later split-management stage will carve validation from trainval using a fixed seed.
+
 ### Local location
 
-Raw dataset:
+The raw dataset is expected under:
 
-`data/raw/`
+`data/raw/oxford-iiit-pet/`
 
-The raw dataset is not committed directly to Git. It will be tracked through DVC.
+Raw data is not committed directly to Git. It will be tracked through DVC in the dedicated DVC issue.
 
-### Reproducibility
+### Acquisition and validation
 
-Dataset acquisition is implemented by:
+Dataset acquisition and validation are implemented by:
 
 `scripts/download_dataset.py`
 
-The script:
+Download and validate from a clean environment:
 
-1. Downloads the `trainval` split.
-2. Downloads the `test` split.
-3. Validates the expected total image count.
-4. Validates the expected 37 classes.
-5. Does not download during validation.
+```powershell
+python .\scripts\download_dataset.py --download
+```
 
-The test set must remain protected from training and tuning workflows.
+Validate an existing local copy without downloading:
+
+```powershell
+python .\scripts\download_dataset.py
+```
+
+Validation checks:
+
+1. `trainval.txt` contains exactly 3,680 images.
+2. `test.txt` contains exactly 3,669 images.
+3. Trainval and test image IDs do not overlap.
+4. Exactly 37 class labels are present.
+5. The image directory contains exactly the 7,349 images referenced by the official split files.
+6. Missing or extra images cause validation to fail.
+
+The script does not commit or upload raw image data to Git.
