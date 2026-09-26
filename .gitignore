@@ -103,7 +103,8 @@ reports/generated/
 
 # Raw / generated datasets should be managed by DVC,
 # not committed directly to Git.
-data/raw/
+data/raw/*
+!data/raw/*.dvc
 data/processed/
 data/corrupted/
 
