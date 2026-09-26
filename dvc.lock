@@ -46,3 +46,29 @@ stages:
       hash: md5
       md5: d092acaf755f878f905275a24ddbcc36
       size: 2209790
+  corruptions:
+    cmd: python -m scripts.create_corruptions
+    deps:
+    - path: data/processed/manifest.json
+      hash: md5
+      md5: d092acaf755f878f905275a24ddbcc36
+      size: 2209790
+    - path: data/raw/oxford-iiit-pet
+      hash: md5
+      md5: fb773eb63522b0c8aa0f3e545779c7f2.dir
+      size: 1632137285
+      nfiles: 25866
+    - path: scripts/create_corruptions.py
+      hash: md5
+      md5: d709cddbb623912fa898224897219a40
+      size: 3924
+    - path: src/pet_breed_mlops/corruptions.py
+      hash: md5
+      md5: 7b69246018f083639a0d7575b03dd66e
+      size: 4160
+    outs:
+    - path: data/corrupted
+      hash: md5
+      md5: 29fab8a9b7d0f109208a0912d5871d5e.dir
+      size: 3166489306
+      nfiles: 66043
