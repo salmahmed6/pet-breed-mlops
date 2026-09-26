@@ -47,10 +47,12 @@ def generate_corruptions(
 
                     output_path = output_dir / f"{record['image_id']}.jpg"
 
+                    output_quality = 30 if corruption == "jpeg_quality" else 95
+
                     corrupted.save(
                         output_path,
                         format="JPEG",
-                        quality=95,
+                        quality=output_quality,
                     )
 
                     generated.append(

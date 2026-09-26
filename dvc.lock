@@ -1,0 +1,48 @@
+schema: '2.0'
+stages:
+  splits:
+    cmd: python -m scripts.create_splits
+    deps:
+    - path: configs/splits.yaml
+      hash: md5
+      md5: 795de3334aa4bba2bb7b2b1955327642
+      size: 83
+    - path: data/raw/oxford-iiit-pet
+      hash: md5
+      md5: fb773eb63522b0c8aa0f3e545779c7f2.dir
+      size: 1632137285
+      nfiles: 25866
+    - path: scripts/create_splits.py
+      hash: md5
+      md5: 6e4a4a4498b0fe05617480aae0058d74
+      size: 3189
+    outs:
+    - path: data/processed/splits.yaml
+      hash: md5
+      md5: 9ec9887651849b3de8fd2d605fa60614
+      size: 170154
+  manifest:
+    cmd: python -m scripts.create_manifest
+    deps:
+    - path: configs/label_map.json
+      hash: md5
+      md5: c8a1a396d6ba7a71ef214fada5dcda9f
+      size: 834
+    - path: data/processed/splits.yaml
+      hash: md5
+      md5: 9ec9887651849b3de8fd2d605fa60614
+      size: 170154
+    - path: data/raw/oxford-iiit-pet
+      hash: md5
+      md5: fb773eb63522b0c8aa0f3e545779c7f2.dir
+      size: 1632137285
+      nfiles: 25866
+    - path: scripts/create_manifest.py
+      hash: md5
+      md5: 7ca6bfb522ab3a92aa88768aba11032b
+      size: 4498
+    outs:
+    - path: data/processed/manifest.json
+      hash: md5
+      md5: d092acaf755f878f905275a24ddbcc36
+      size: 2209790

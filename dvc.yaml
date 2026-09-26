@@ -1,0 +1,29 @@
+stages:
+  splits:
+    cmd: python -m scripts.create_splits
+    deps:
+      - configs/splits.yaml
+      - scripts/create_splits.py
+      - data/raw/oxford-iiit-pet
+    outs:
+      - data/processed/splits.yaml
+
+  manifest:
+    cmd: python -m scripts.create_manifest
+    deps:
+      - configs/label_map.json
+      - scripts/create_manifest.py
+      - data/raw/oxford-iiit-pet
+      - data/processed/splits.yaml
+    outs:
+      - data/processed/manifest.json
+
+  corruptions:
+    cmd: python -m scripts.create_corruptions
+    deps:
+      - scripts/create_corruptions.py
+      - src/pet_breed_mlops/corruptions.py
+      - data/raw/oxford-iiit-pet
+      - data/processed/manifest.json
+    outs:
+      - data/corrupted
