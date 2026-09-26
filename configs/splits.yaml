@@ -1,0 +1,7 @@
+seed: 42
+
+validation_size: 0.2
+
+source:
+  trainval: official
+  test: official
