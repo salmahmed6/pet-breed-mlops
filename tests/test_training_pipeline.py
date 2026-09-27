@@ -19,10 +19,12 @@ EXPECTED_TEST_SIZE = 3669
 EXPECTED_NUM_CLASSES = 37
 
 
+@pytest.mark.data
 def test_manifest_exists():
     assert MANIFEST_PATH.exists()
 
 
+@pytest.mark.data
 @pytest.mark.parametrize(
     ("split", "expected_size"),
     [
@@ -41,6 +43,7 @@ def test_dataset_split_sizes(split, expected_size):
     assert len(dataset) == expected_size
 
 
+@pytest.mark.data
 def test_dataset_returns_image_and_label():
     dataset = PetBreedDataset(
         manifest_path=MANIFEST_PATH,
@@ -56,6 +59,7 @@ def test_dataset_returns_image_and_label():
     assert 0 <= label < EXPECTED_NUM_CLASSES
 
 
+@pytest.mark.data
 def test_all_splits_are_non_empty():
     train_dataset = PetBreedDataset(
         manifest_path=MANIFEST_PATH,
@@ -80,6 +84,7 @@ def test_all_splits_are_non_empty():
     assert len(test_dataset) > 0
 
 
+@pytest.mark.data
 def test_dataloaders():
     train_loader, val_loader, test_loader = create_dataloaders(
         manifest_path=str(MANIFEST_PATH),
@@ -151,6 +156,7 @@ def test_confusion_matrix():
     assert matrix[2, 0] == 1
 
 
+@pytest.mark.data
 def test_labels_are_within_37_classes():
     dataset = PetBreedDataset(
         manifest_path=MANIFEST_PATH,
