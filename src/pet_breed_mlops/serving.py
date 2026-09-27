@@ -69,12 +69,13 @@ def predict_top_k(
         raise ValueError("top_k must be positive.")
 
     index_to_breed = {index: breed for breed, index in label_map.items()}
+    raw_probabilities = torch.softmax(logits, dim=-1)[0]
     probabilities = temperature_scale(logits, temperature)[0]
     values, indices = torch.topk(probabilities, k=min(top_k, probabilities.numel()))
 
     predictions = []
-    for confidence, class_index in zip(values.tolist(), indices.tolist()):
-        calibrated_confidence = float(confidence)
+    for calibrated_confidence, class_index in zip(values.tolist(), indices.tolist()):
+        raw_confidence = float(raw_probabilities[int(class_index)])
         predictions.append(
             {
                 "breed": index_to_breed[int(class_index)],
