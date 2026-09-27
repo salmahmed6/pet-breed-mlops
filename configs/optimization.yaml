@@ -1,0 +1,24 @@
+benchmark:
+  batch_sizes: [1, 8, 16, 32]
+  warmup: 10
+  iterations: 50
+
+structured_pruning:
+  amount: 0.20
+
+ptq:
+  calibration_batches: 32
+
+qat:
+  epochs: 1
+  max_batches: 10
+
+distillation:
+  temperature: 4.0
+  alpha: 0.5
+  epochs: 1
+  max_batches: 10
+
+quality:
+  comparison_split: val
+  test_split_used: false
