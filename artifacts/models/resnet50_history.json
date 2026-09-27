@@ -1,11 +1,11 @@
 [
   {
     "epoch": 1,
-    "train_loss": 3.5845124244689943,
-    "train_top_1_accuracy": 0.0625,
-    "train_macro_f1": 0.041380070546737216,
-    "val_loss": 3.50544114112854,
-    "val_top_1_accuracy": 0.15,
-    "val_macro_f1": 0.048283957757641965
+    "train_loss": 3.4701095104217528,
+    "train_top_1_accuracy": 0.15625,
+    "train_macro_f1": 0.07923832923832923,
+    "val_loss": 3.138603353500366,
+    "val_top_1_accuracy": 0.06875,
+    "val_macro_f1": 0.05539800701091024
   }
 ]
