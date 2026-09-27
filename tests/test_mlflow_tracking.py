@@ -6,7 +6,8 @@ from pet_breed_mlops.tracking.mlflow_tracker import MLflowTracker
 
 
 def test_mlflow_tracker_logs_run(tmp_path: Path) -> None:
-    tracking_uri = (tmp_path / "mlruns").as_uri()
+    database_path = (tmp_path / "mlflow.db").as_posix()
+    tracking_uri = f"sqlite:///{database_path}"
     tracker = MLflowTracker(
         tracking_uri=tracking_uri,
         experiment_name="test-pet-breed",
