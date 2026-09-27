@@ -10,8 +10,8 @@ from torch import nn, optim
 from pet_breed_mlops.data.loaders import create_dataloaders
 from pet_breed_mlops.models.factory import create_model
 from pet_breed_mlops.training.metrics import calculate_metrics
-from pet_breed_mlops.tracking.mlflow_tracker import MLflowTracker
 from pet_breed_mlops.training.seed import set_seed
+from pet_breed_mlops.tracking.mlflow_tracker import MLflowTracker
 
 
 def _run_epoch(
@@ -79,16 +79,18 @@ def train_model(
     if mlflow_config_path is not None:
         tracker = MLflowTracker.from_config(mlflow_config_path)
         tracker.start(run_name=f"{model_name}-seed-{seed}")
-        tracker.log_params({
-            "backbone": model_name,
+        tracker.log_params(
+            {
+                "backbone": model_name,
             "seed": seed,
             "image_size": image_size,
             "batch_size": batch_size,
             "epochs": epochs,
             "learning_rate": learning_rate,
             "weight_decay": weight_decay,
-            "max_batches": max_batches if max_batches is not None else "all",
-        })
+                "max_batches": max_batches if max_batches is not None else "all",
+            }
+        )
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Device: {device}", flush=True)
 
@@ -169,14 +171,16 @@ def train_model(
 
     history_path.write_text(json.dumps(history, indent=2), encoding="utf-8")
     if tracker is not None:
-        tracker.log_metrics({
-            "train_loss": history[-1]["train_loss"],
+        tracker.log_metrics(
+            {
+                "train_loss": history[-1]["train_loss"],
             "train_top_1_accuracy": history[-1]["train_top_1_accuracy"],
             "train_macro_f1": history[-1]["train_macro_f1"],
             "val_loss": history[-1]["val_loss"],
             "val_top_1_accuracy": best_accuracy,
-            "val_macro_f1": best_macro_f1,
-        })
+                "val_macro_f1": best_macro_f1,
+            }
+        )
         tracker.log_artifact(history_path, artifact_path="training")
         tracker.log_artifact(checkpoint_path, artifact_path="checkpoints")
         best_checkpoint = torch.load(checkpoint_path, map_location=device, weights_only=False)
