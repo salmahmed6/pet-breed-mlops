@@ -11,8 +11,11 @@ import yaml
 
 from pet_breed_mlops.data.loaders import create_dataloaders
 from pet_breed_mlops.models.factory import create_model
-from pet_breed_mlops.optimization import batch_sizes_from_string, count_parameters, structured_prune_model
-from pet_breed_mlops.tracking.mlflow_tracker import MLflowTracker
+from pet_breed_mlops.optimization import (
+    batch_sizes_from_string,
+    count_parameters,
+    structured_prune_model,
+)
 
 
 def load_model(checkpoint: Path, device: torch.device):
@@ -22,7 +25,14 @@ def load_model(checkpoint: Path, device: torch.device):
     return model.to(device).eval(), payload["model_name"]
 
 
-def benchmark(model, batch_size: int, image_size: int, warmup: int, iterations: int, device):
+def benchmark(
+    model,
+    batch_size: int,
+    image_size: int,
+    warmup: int,
+    iterations: int,
+    device,
+):
     sample = torch.randn(batch_size, 3, image_size, image_size, device=device)
     with torch.inference_mode():
         for _ in range(warmup):
@@ -65,8 +75,16 @@ def main():
     parser.add_argument("--batch-sizes", default="1,8,16,32")
     parser.add_argument("--warmup", type=int, default=10)
     parser.add_argument("--iterations", type=int, default=50)
-    parser.add_argument("--output", type=Path, default=Path("reports/optimization/benchmark.json"))
-    parser.add_argument("--mlflow-config", type=Path, default=Path("configs/mlflow.yaml"))
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=Path("reports/optimization/benchmark.json"),
+    )
+    parser.add_argument(
+        "--mlflow-config",
+        type=Path,
+        default=Path("configs/mlflow.yaml"),
+    )
     parser.add_argument("--no-mlflow", action="store_true")
     args = parser.parse_args()
 
@@ -92,7 +110,14 @@ def main():
         "structured_pruning_sparsity": sparsity,
         "val_top_1_accuracy": validation_accuracy(model, val_loader, device),
         "batch_size_matrix": [
-            benchmark(model, size, int(config["data"]["image_size"]), args.warmup, args.iterations, device)
+            benchmark(
+                model,
+                size,
+                int(config["data"]["image_size"]),
+                args.warmup,
+                args.iterations,
+                device,
+            )
             for size in batch_sizes_from_string(args.batch_sizes)
         ],
     }
