@@ -8,20 +8,31 @@ from pathlib import Path
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Build a TensorRT FP16 engine when trtexec is available.")
+    parser = argparse.ArgumentParser(
+        description="Build a TensorRT FP16 engine when trtexec is available."
+    )
     parser.add_argument("--onnx", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
     args = parser.parse_args()
 
     trtexec = shutil.which("trtexec")
-    result = {"supported": trtexec is not None, "onnx": str(args.onnx), "engine": str(args.output)}
+    result = {
+        "supported": trtexec is not None,
+        "onnx": str(args.onnx),
+        "engine": str(args.output),
+    }
     if trtexec is None:
         result["status"] = "skipped"
         result["reason"] = "trtexec is not available in this environment"
     else:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         completed = subprocess.run(
-            [trtexec, f"--onnx={args.onnx}", f"--saveEngine={args.output}", "--fp16"],
+            [
+                trtexec,
+                f"--onnx={args.onnx}",
+                f"--saveEngine={args.output}",
+                "--fp16",
+            ],
             text=True,
             capture_output=True,
             check=False,
