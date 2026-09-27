@@ -185,7 +185,7 @@ def train_model(
         tracker.log_artifact(checkpoint_path, artifact_path="checkpoints")
         best_checkpoint = torch.load(checkpoint_path, map_location=device, weights_only=False)
         model.load_state_dict(best_checkpoint["model_state_dict"])
-        tracker.log_pytorch_model(model)
+        tracker.log_pytorch_model(model, image_size=image_size)
         run_id = tracker.run_id
         tracker.finish()
     else:
