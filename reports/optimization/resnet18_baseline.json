@@ -1,0 +1,34 @@
+{
+  "model": "resnet18",
+  "method": "baseline",
+  "device": "cpu",
+  "parameter_count": 11195493,
+  "structured_pruning_sparsity": 0.0,
+  "val_top_1_accuracy": 0.27717391304347827,
+  "batch_size_matrix": [
+    {
+      "batch_size": 1,
+      "latency_ms_p50": 253.39765001263004,
+      "latency_ms_p95": 265.5806999828201,
+      "throughput_images_per_second": 3.946366511094942
+    },
+    {
+      "batch_size": 8,
+      "latency_ms_p50": 1523.2338000059826,
+      "latency_ms_p95": 1761.207600007765,
+      "throughput_images_per_second": 5.251984298121916
+    },
+    {
+      "batch_size": 16,
+      "latency_ms_p50": 2948.9078499900643,
+      "latency_ms_p95": 4415.401500009466,
+      "throughput_images_per_second": 5.425737531965914
+    },
+    {
+      "batch_size": 32,
+      "latency_ms_p50": 6302.352099999553,
+      "latency_ms_p95": 9593.867699994007,
+      "throughput_images_per_second": 5.077469410190883
+    }
+  ]
+}
