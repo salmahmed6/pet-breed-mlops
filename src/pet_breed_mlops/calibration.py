@@ -157,9 +157,7 @@ def choose_abstention_threshold(
             labels,
             float(threshold.item()),
         )
-        if (accuracy > best_accuracy) or (
-            accuracy == best_accuracy and coverage > best_coverage
-        ):
+        if (accuracy > best_accuracy) or (accuracy == best_accuracy and coverage > best_coverage):
             best_threshold = float(threshold.item())
             best_coverage = coverage
             best_accuracy = accuracy
