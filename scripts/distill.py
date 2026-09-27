@@ -5,7 +5,7 @@ from pathlib import Path
 
 import torch
 import yaml
-from torch import nn, optim
+from torch import optim
 
 from pet_breed_mlops.data.loaders import create_dataloaders
 from pet_breed_mlops.models.factory import create_model
@@ -40,7 +40,10 @@ def main():
         int(config["training"]["batch_size"]),
         int(config["data"]["num_workers"]),
     )
-    optimizer = optim.AdamW(student.parameters(), lr=float(config["training"]["learning_rate"]))
+    optimizer = optim.AdamW(
+        student.parameters(),
+        lr=float(config["training"]["learning_rate"]),
+    )
     for _ in range(args.epochs):
         for batch_index, (images, labels) in enumerate(train_loader):
             if batch_index >= args.max_batches:
@@ -61,7 +64,10 @@ def main():
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     torch.save(
-        {"model_name": student_payload["model_name"], "model_state_dict": student.state_dict()},
+        {
+            "model_name": student_payload["model_name"],
+            "model_state_dict": student.state_dict(),
+        },
         args.output,
     )
     print(f"Distilled checkpoint: {args.output}")
