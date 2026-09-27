@@ -31,7 +31,7 @@ def confusion_matrix(
         dtype=np.int64,
     )
 
-    for true, pred in zip(y_true, y_pred):
+    for true, pred in zip(y_true, y_pred, strict=True):
         matrix[true, pred] += 1
 
     return matrix
