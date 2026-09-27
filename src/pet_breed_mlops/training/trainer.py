@@ -82,12 +82,12 @@ def train_model(
         tracker.log_params(
             {
                 "backbone": model_name,
-            "seed": seed,
-            "image_size": image_size,
-            "batch_size": batch_size,
-            "epochs": epochs,
-            "learning_rate": learning_rate,
-            "weight_decay": weight_decay,
+                "seed": seed,
+                "image_size": image_size,
+                "batch_size": batch_size,
+                "epochs": epochs,
+                "learning_rate": learning_rate,
+                "weight_decay": weight_decay,
                 "max_batches": max_batches if max_batches is not None else "all",
             }
         )
@@ -174,10 +174,10 @@ def train_model(
         tracker.log_metrics(
             {
                 "train_loss": history[-1]["train_loss"],
-            "train_top_1_accuracy": history[-1]["train_top_1_accuracy"],
-            "train_macro_f1": history[-1]["train_macro_f1"],
-            "val_loss": history[-1]["val_loss"],
-            "val_top_1_accuracy": best_accuracy,
+                "train_top_1_accuracy": history[-1]["train_top_1_accuracy"],
+                "train_macro_f1": history[-1]["train_macro_f1"],
+                "val_loss": history[-1]["val_loss"],
+                "val_top_1_accuracy": best_accuracy,
                 "val_macro_f1": best_macro_f1,
             }
         )
