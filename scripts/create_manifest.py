@@ -31,7 +31,7 @@ def load_splits(path: Path) -> dict[str, list[str]]:
 
     return {
         "train": list(data["train"]),
-        "validation": list(data["validation"]),
+        "val": list(data["validation"]),
         "test": list(data["test"]),
     }
 

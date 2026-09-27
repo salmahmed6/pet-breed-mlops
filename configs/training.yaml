@@ -1,0 +1,20 @@
+seed: 42
+
+data:
+  manifest: data/processed/manifest.json
+  image_size: 224
+  num_workers: 2
+
+training:
+  batch_size: 32
+  epochs: 5
+  learning_rate: 0.0001
+  weight_decay: 0.0001
+
+models:
+  - resnet18
+  - resnet50
+  - mobilenet_v3_small
+
+output:
+  directory: artifacts/models
