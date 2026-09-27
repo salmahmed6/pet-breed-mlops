@@ -74,14 +74,18 @@ def predict_top_k(
     values, indices = torch.topk(probabilities, k=min(top_k, probabilities.numel()))
 
     predictions = []
-    for calibrated_confidence, class_index in zip(values.tolist(), indices.tolist()):
+    for calibrated_confidence, class_index in zip(
+        values.tolist(),
+        indices.tolist(),
+        strict=True,
+    ):
         raw_confidence = float(raw_probabilities[int(class_index)])
         predictions.append(
             {
                 "breed": index_to_breed[int(class_index)],
                 "species": species_for_class(int(class_index)),
                 "class_index": int(class_index),
-                "confidence": calibrated_confidence,
+                "confidence": raw_confidence,
                 "calibrated_confidence": calibrated_confidence,
                 "abstained": (
                     abstention_threshold is not None
