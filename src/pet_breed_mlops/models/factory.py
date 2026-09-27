@@ -10,7 +10,6 @@ from torchvision.models import (
     resnet50,
 )
 
-
 NUM_CLASSES = 37
 
 

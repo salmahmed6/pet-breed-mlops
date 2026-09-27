@@ -11,7 +11,6 @@ from pet_breed_mlops.training.metrics import (
     confusion_matrix,
 )
 
-
 MANIFEST_PATH = Path("data/processed/manifest.json")
 
 EXPECTED_TRAIN_SIZE = 2944

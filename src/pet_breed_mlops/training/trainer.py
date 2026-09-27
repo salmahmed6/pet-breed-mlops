@@ -9,9 +9,9 @@ from torch import nn, optim
 
 from pet_breed_mlops.data.loaders import create_dataloaders
 from pet_breed_mlops.models.factory import create_model
+from pet_breed_mlops.tracking.mlflow_tracker import MLflowTracker
 from pet_breed_mlops.training.metrics import calculate_metrics
 from pet_breed_mlops.training.seed import set_seed
-from pet_breed_mlops.tracking.mlflow_tracker import MLflowTracker
 
 
 def _run_epoch(

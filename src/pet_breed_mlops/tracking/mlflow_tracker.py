@@ -25,7 +25,7 @@ class MLflowTracker:
         self.run = None
 
     @classmethod
-    def from_config(cls, config_path: str | Path) -> "MLflowTracker":
+    def from_config(cls, config_path: str | Path) -> MLflowTracker:
         with Path(config_path).open("r", encoding="utf-8") as file:
             config = yaml.safe_load(file)
         return cls(
