@@ -34,7 +34,9 @@ def test_scorecard_contains_all_detector_flags(tmp_path) -> None:
         def __init__(self) -> None:
             super().__init__()
             self.avgpool = torch.nn.AdaptiveAvgPool2d((1, 1))
-            self.classifier = torch.nn.Sequential(torch.nn.Linear(3, 4), torch.nn.ReLU(), torch.nn.Linear(4, 2))
+            self.classifier = torch.nn.Sequential(
+                torch.nn.Linear(3, 4), torch.nn.ReLU(), torch.nn.Linear(4, 2)
+            )
 
         def forward(self, x: torch.Tensor) -> torch.Tensor:
             features = self.avgpool(x).flatten(1)
@@ -46,7 +48,15 @@ def test_scorecard_contains_all_detector_flags(tmp_path) -> None:
     Image.new("RGB", (32, 32), (80, 80, 80)).save(clean_path)
     Image.new("RGB", (32, 32), (200, 200, 200)).save(corrupted_path)
     clean = [{"image_id": "clean_1", "path": str(clean_path), "class_index": 0, "split": "test"}]
-    corrupted = [{"image_id": "clean_1", "path": str(corrupted_path), "class_index": 0, "corruption": "brightness_up", "severity": 1}]
+    corrupted = [
+        {
+            "image_id": "clean_1",
+            "path": str(corrupted_path),
+            "class_index": 0,
+            "corruption": "brightness_up",
+            "severity": 1,
+        }
+    ]
     scorecard = build_scorecard(model, clean, corrupted, max_samples_per_group=1)
     assert scorecard["clean_reference"]["samples"] == 1
     assert len(scorecard["groups"]) == 1

@@ -17,12 +17,20 @@ from pet_breed_mlops.drift import (
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run the Track C drift scorecard.")
-    parser.add_argument("--checkpoint", type=Path, default=Path("artifacts/models/resnet18_best.pt"))
+    parser.add_argument(
+        "--checkpoint", type=Path, default=Path("artifacts/models/resnet18_best.pt")
+    )
     parser.add_argument("--manifest", type=Path, default=Path("data/processed/manifest.json"))
-    parser.add_argument("--corrupted-metadata", type=Path, default=Path("data/corrupted/metadata.json"))
+    parser.add_argument(
+        "--corrupted-metadata", type=Path, default=Path("data/corrupted/metadata.json")
+    )
     parser.add_argument("--config", type=Path, default=Path("configs/monitoring.yaml"))
-    parser.add_argument("--output-json", type=Path, default=Path("reports/monitoring/drift_scorecard.json"))
-    parser.add_argument("--output-csv", type=Path, default=Path("reports/monitoring/drift_scorecard.csv"))
+    parser.add_argument(
+        "--output-json", type=Path, default=Path("reports/monitoring/drift_scorecard.json")
+    )
+    parser.add_argument(
+        "--output-csv", type=Path, default=Path("reports/monitoring/drift_scorecard.csv")
+    )
     return parser.parse_args()
 
 
@@ -34,7 +42,9 @@ def main() -> None:
     corrupted = load_json_records(args.corrupted_metadata)
     clean_records = [record for record in manifest if record["split"] == "test"]
     scorecard = build_scorecard(
-        model, clean_records, corrupted,
+        model,
+        clean_records,
+        corrupted,
         image_size=int(config["image_size"]),
         max_samples_per_group=int(config["max_samples_per_group"]),
         mmd_threshold=float(config["thresholds"]["embedding_mmd"]),

@@ -4,14 +4,15 @@ from __future__ import annotations
 
 import csv
 import json
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 import numpy as np
 import torch
 from PIL import Image, ImageFilter
 
-from pet_breed_mlops.serving import build_inference_transform, load_checkpoint_model
+from pet_breed_mlops.serving import build_inference_transform
 
 DEFAULT_MMD_THRESHOLD = 0.05
 DEFAULT_PIXEL_THRESHOLD = 0.10
@@ -64,10 +65,13 @@ def image_statistics(image: Image.Image) -> np.ndarray:
     rgb = image.convert("RGB")
     array = np.asarray(rgb, dtype=np.float32) / 255.0
     grayscale = np.asarray(rgb.convert("L"), dtype=np.float32) / 255.0
-    edges = np.asarray(
-        rgb.convert("L").filter(ImageFilter.FIND_EDGES),
-        dtype=np.float32,
-    ) / 255.0
+    edges = (
+        np.asarray(
+            rgb.convert("L").filter(ImageFilter.FIND_EDGES),
+            dtype=np.float32,
+        )
+        / 255.0
+    )
     return np.array(
         [
             float(array.mean()),
@@ -161,7 +165,6 @@ def _predict_records(
     transform = build_inference_transform(image_size)
     correct = 0
     confidences: list[float] = []
-    label_map = load_label_map()
     with torch.inference_mode():
         for record in records:
             with Image.open(record["path"]) as image:
