@@ -31,7 +31,9 @@ def main():
     max_error = float(np.max(np.abs(torch_logits - onnx_logits)))
     print(f"Max absolute logit error: {max_error:.8f}")
     if max_error > args.tolerance:
-        raise SystemExit(f"ONNX agreement failed: {max_error:.8f} > {args.tolerance:.8f}")
+        raise SystemExit(
+            f"ONNX agreement failed: {max_error:.8f} > {args.tolerance:.8f}"
+        )
 
 
 if __name__ == "__main__":
