@@ -149,11 +149,11 @@ def main() -> None:
                 "calibration_split": "val",
                 "abstention_method": "max_calibrated_confidence_threshold",
                 "abstention_threshold": result.abstention_threshold,
+                "temperature": result.temperature,
             }
         )
         tracker.log_metrics(
             {
-                "temperature": result.temperature,
                 "raw_ece": result.raw_ece,
                 "calibrated_ece": result.calibrated_ece,
                 "coverage": result.coverage,
