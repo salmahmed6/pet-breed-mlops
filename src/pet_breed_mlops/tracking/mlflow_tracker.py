@@ -61,6 +61,7 @@ class MLflowTracker:
             name="model",
             input_example=input_example,
             registered_model_name=self.registered_model_name,
+            serialization_format="pickle",
         )
 
     def finish(self) -> None:
