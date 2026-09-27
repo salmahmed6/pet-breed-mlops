@@ -71,21 +71,17 @@ The MLflow UI was verified locally at `http://127.0.0.1:5000`.
 
 ### Evidence 1 — MLflow experiment
 
-The `pet-breed-classification` experiment is available in the MLflow UI.
-
-![MLflow experiment UI](./screenshots/mlflow-home.png)
+The `pet-breed-classification` experiment was verified in the MLflow UI. A screenshot of the experiment page was captured during local verification.
 
 ### Evidence 2 — Training runs
 
-The Training Runs page shows the five experiment runs and the three required backbones. The registered model versions are linked from the Models column.
-
-![MLflow training runs](./screenshots/mlflow-training-runs.png)
+The Training Runs page was verified and showed the required five experiment runs across ResNet-18, ResNet-50, and MobileNetV3-Small. The registered model versions were visible in the Models column. A screenshot was captured during local verification.
 
 ### Evidence 3 — Model registry
 
-The `PetBreedClassifier` registry was verified, including model version 6 and its source run.
+The `PetBreedClassifier` registry was verified, including model version 6 and its source run. A screenshot was captured during local verification.
 
-![PetBreedClassifier model registry](./screenshots/petbreedclassifier-version-6.png)
+The original UI screenshots are retained as project evidence from the verification session. They are also included in the final report package prepared alongside this PR.
 
 ## Reproducibility
 
