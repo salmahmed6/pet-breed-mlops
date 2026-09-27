@@ -10,7 +10,13 @@ import yaml
 class MLflowTracker:
     """Small wrapper around MLflow for reproducible training runs."""
 
-    def __init__(self, *, tracking_uri: str, experiment_name: str, registered_model_name: str) -> None:
+    def __init__(
+        self,
+        *,
+        tracking_uri: str,
+        experiment_name: str,
+        registered_model_name: str,
+    ) -> None:
         self.tracking_uri = tracking_uri
         self.experiment_name = experiment_name
         self.registered_model_name = registered_model_name
