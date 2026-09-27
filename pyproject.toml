@@ -35,7 +35,6 @@ dev = [
     "dvc>=3.50,<4.0",
 ]
 
-[project.optional-dependencies]
 loadtest = ["locust>=2.0,<3.0"]
 
 [tool.setuptools]
