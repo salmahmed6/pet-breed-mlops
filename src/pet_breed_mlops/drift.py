@@ -11,7 +11,6 @@ import numpy as np
 import torch
 from PIL import Image, ImageFilter
 
-from pet_breed_mlops.labels import load_label_map
 from pet_breed_mlops.serving import build_inference_transform, load_checkpoint_model
 
 DEFAULT_MMD_THRESHOLD = 0.05
