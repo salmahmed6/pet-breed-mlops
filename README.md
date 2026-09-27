@@ -62,3 +62,8 @@ python -m mypy src
 
 Each command returns a non-zero exit code when its check fails, so the same
 commands can be used directly as CI quality gates.
+
+
+## Serving load tests
+
+Batch scoring and Locust load-test commands are documented in [docs/load_testing.md](docs/load_testing.md). Results are generated under `reports/serving/` and are never fabricated.
