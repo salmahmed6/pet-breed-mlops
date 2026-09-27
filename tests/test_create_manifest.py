@@ -102,7 +102,7 @@ def test_manifest_uses_frozen_split_metadata(tmp_path: Path) -> None:
 
     assert split_by_image == {
         "Abyssinian_1": "train",
-        "boxer_1": "validation",
+        "boxer_1": "val",
         "pug_1": "test",
     }
 
