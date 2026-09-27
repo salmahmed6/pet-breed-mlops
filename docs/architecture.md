@@ -790,3 +790,8 @@ The project prioritizes reproducibility, measurable engineering decisions, and p
 Every major stage should produce an inspectable artifact, metric, test, or report.
 
 Negative results are acceptable when they are actually measured and documented. The architecture therefore treats reproducibility and honest reporting as first-class project requirements.
+
+
+## Deployment evidence path
+
+`Client -> BentoML inference endpoint -> model runtime` is exercised by Locust for request-level load evidence. Batch scoring runs directly against the model checkpoint for offline throughput evidence. Load-test reports are stored under `reports/serving/` and record workload assumptions separately from measured results.

@@ -1,0 +1,31 @@
+name: "pet-breed-classifier"
+platform: "onnxruntime_onnx"
+max_batch_size: 32
+
+input [
+  {
+    name: "images"
+    data_type: TYPE_FP32
+    dims: [ 3, 224, 224 ]
+  }
+]
+
+output [
+  {
+    name: "logits"
+    data_type: TYPE_FP32
+    dims: [ 37 ]
+  }
+]
+
+instance_group [
+  {
+    kind: KIND_CPU
+    count: 1
+  }
+]
+
+dynamic_batching {
+  preferred_batch_size: [ 1, 8, 16, 32 ]
+  max_queue_delay_microseconds: 1000
+}

@@ -1,0 +1,3 @@
+metric: top_1_accuracy
+baseline_report: reports/quality_baseline.json
+minimum_delta: 0.0
