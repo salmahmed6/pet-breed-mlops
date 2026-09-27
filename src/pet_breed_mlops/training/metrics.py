@@ -7,9 +7,7 @@ def calculate_metrics(
     y_pred: list[int],
 ) -> dict[str, float]:
     return {
-        "top_1_accuracy": float(
-            accuracy_score(y_true, y_pred)
-        ),
+        "top_1_accuracy": float(accuracy_score(y_true, y_pred)),
         "macro_f1": float(
             f1_score(
                 y_true,

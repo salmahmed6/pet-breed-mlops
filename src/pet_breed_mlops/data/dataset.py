@@ -23,11 +23,7 @@ class PetBreedDataset(Dataset):
         with self.manifest_path.open("r", encoding="utf-8") as file:
             records: list[dict[str, Any]] = json.load(file)
 
-        self.records = [
-            record
-            for record in records
-            if record["split"] == split
-        ]
+        self.records = [record for record in records if record["split"] == split]
 
         if not self.records:
             raise ValueError(f"No records found for split: {split}")

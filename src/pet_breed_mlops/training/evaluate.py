@@ -64,9 +64,7 @@ def evaluate_checkpoint(
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Evaluate a trained pet breed classifier."
-    )
+    parser = argparse.ArgumentParser(description="Evaluate a trained pet breed classifier.")
     parser.add_argument(
         "--model",
         required=True,
@@ -83,9 +81,7 @@ def main():
     with args.config.open("r", encoding="utf-8") as file:
         config = yaml.safe_load(file)
 
-    checkpoint = (
-        Path(config["output"]["directory"]) / f"{args.model}_best.pt"
-    )
+    checkpoint = Path(config["output"]["directory"]) / f"{args.model}_best.pt"
     result = evaluate_checkpoint(
         checkpoint,
         config["data"]["manifest"],

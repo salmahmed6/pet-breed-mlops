@@ -11,7 +11,6 @@ from pet_breed_mlops.training.metrics import (
     confusion_matrix,
 )
 
-
 MANIFEST_PATH = Path("data/processed/manifest.json")
 
 EXPECTED_TRAIN_SIZE = 2944
@@ -159,10 +158,7 @@ def test_labels_are_within_37_classes():
         image_size=224,
     )
 
-    labels = {
-        dataset[index][1]
-        for index in range(len(dataset))
-    }
+    labels = {dataset[index][1] for index in range(len(dataset))}
 
     assert len(labels) == EXPECTED_NUM_CLASSES
     assert labels == set(range(EXPECTED_NUM_CLASSES))

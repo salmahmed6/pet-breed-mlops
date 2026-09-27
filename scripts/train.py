@@ -18,6 +18,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--epochs", type=int, default=None)
     parser.add_argument("--max-batches", type=int, default=None)
     parser.add_argument("--config", type=Path, default=Path("configs/training.yaml"))
+    parser.add_argument("--mlflow", action="store_true", help="Track this run in MLflow.")
+    parser.add_argument("--mlflow-config", type=Path, default=Path("configs/mlflow.yaml"))
     return parser.parse_args()
 
 
@@ -45,6 +47,7 @@ def main() -> None:
         seed=int(config["seed"]),
         output_dir=Path(config["output"]["directory"]),
         max_batches=args.max_batches,
+        mlflow_config_path=args.mlflow_config if args.mlflow else None,
     )
 
     print(
@@ -56,6 +59,8 @@ def main() -> None:
         flush=True,
     )
     print(f"Checkpoint: {result['checkpoint_path']}", flush=True)
+    if result.get("mlflow_run_id"):
+        print(f"MLflow run: {result['mlflow_run_id']}", flush=True)
 
 
 if __name__ == "__main__":
