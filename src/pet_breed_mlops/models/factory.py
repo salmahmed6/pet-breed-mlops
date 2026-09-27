@@ -2,11 +2,9 @@ from __future__ import annotations
 
 import torch.nn as nn
 from torchvision.models import (
-    EfficientNet_B0_Weights,
     MobileNet_V3_Small_Weights,
     ResNet18_Weights,
     ResNet50_Weights,
-    efficientnet_b0,
     mobilenet_v3_small,
     resnet18,
     resnet50,
