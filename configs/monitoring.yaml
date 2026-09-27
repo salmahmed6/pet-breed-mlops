@@ -1,0 +1,7 @@
+image_size: 224
+max_samples_per_group: 32
+
+thresholds:
+  embedding_mmd: 0.05
+  pixel_mmd: 0.10
+  confidence_drift: 0.05
