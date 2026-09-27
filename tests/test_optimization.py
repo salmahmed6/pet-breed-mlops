@@ -1,7 +1,11 @@
 import torch
 from torch import nn
 
-from pet_breed_mlops.optimization import batch_sizes_from_string, distillation_loss, structured_prune_model
+from pet_breed_mlops.optimization import (
+    batch_sizes_from_string,
+    distillation_loss,
+    structured_prune_model,
+)
 
 
 def test_batch_sizes_parser():

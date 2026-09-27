@@ -5,7 +5,7 @@ from pathlib import Path
 
 import torch
 import yaml
-from torch import nn, optim
+from torch import optim
 
 from pet_breed_mlops.data.loaders import create_dataloaders
 from pet_breed_mlops.models.factory import create_model

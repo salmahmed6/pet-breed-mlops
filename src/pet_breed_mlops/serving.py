@@ -126,9 +126,7 @@ def predict_image(
 
 
 def load_serving_settings() -> dict[str, Any]:
-    checkpoint = Path(
-        os.getenv("PET_BREED_CHECKPOINT", "artifacts/models/resnet18_best.pt")
-    )
+    checkpoint = Path(os.getenv("PET_BREED_CHECKPOINT", "artifacts/models/resnet18_best.pt"))
     temperature = float(os.getenv("PET_BREED_TEMPERATURE", "1.0"))
     threshold_raw = os.getenv("PET_BREED_ABSTENTION_THRESHOLD")
     threshold = float(threshold_raw) if threshold_raw else None

@@ -39,6 +39,7 @@ def test_temperature_changes_calibrated_confidence():
     cold = predict_top_k(logits, label_map, temperature=0.5)
     warm = predict_top_k(logits, label_map, temperature=2.0)
 
-    assert cold["predictions"][0]["calibrated_confidence"] > warm["predictions"][0][
-        "calibrated_confidence"
-    ]
+    assert (
+        cold["predictions"][0]["calibrated_confidence"]
+        > warm["predictions"][0]["calibrated_confidence"]
+    )

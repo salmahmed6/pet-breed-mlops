@@ -11,8 +11,11 @@ import yaml
 
 from pet_breed_mlops.data.loaders import create_dataloaders
 from pet_breed_mlops.models.factory import create_model
-from pet_breed_mlops.optimization import batch_sizes_from_string, count_parameters, structured_prune_model
-from pet_breed_mlops.tracking.mlflow_tracker import MLflowTracker
+from pet_breed_mlops.optimization import (
+    batch_sizes_from_string,
+    count_parameters,
+    structured_prune_model,
+)
 
 
 def load_model(checkpoint: Path, device: torch.device):
@@ -92,7 +95,9 @@ def main():
         "structured_pruning_sparsity": sparsity,
         "val_top_1_accuracy": validation_accuracy(model, val_loader, device),
         "batch_size_matrix": [
-            benchmark(model, size, int(config["data"]["image_size"]), args.warmup, args.iterations, device)
+            benchmark(
+                model, size, int(config["data"]["image_size"]), args.warmup, args.iterations, device
+            )
             for size in batch_sizes_from_string(args.batch_sizes)
         ],
     }

@@ -5,7 +5,6 @@ from pathlib import Path
 
 import numpy as np
 import onnx
-import onnxruntime as ort
 import yaml
 from onnxruntime.quantization import CalibrationDataReader, QuantFormat, QuantType, quantize_static
 
@@ -13,7 +12,9 @@ from pet_breed_mlops.data.loaders import create_dataloaders
 
 
 class PetCalibrationReader(CalibrationDataReader):
-    def __init__(self, manifest: str, image_size: int, batch_size: int, num_workers: int, max_batches: int):
+    def __init__(
+        self, manifest: str, image_size: int, batch_size: int, num_workers: int, max_batches: int
+    ):
         _, self.loader, _ = create_dataloaders(manifest, image_size, batch_size, num_workers)
         self.max_batches = max_batches
         self.iterator = iter(self.loader)

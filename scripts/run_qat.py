@@ -49,7 +49,10 @@ def main():
     model.eval()
     quantized = torch.ao.quantization.convert(model, inplace=False)
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    torch.save({"model_name": payload["model_name"], "model_state_dict": quantized.state_dict()}, args.output)
+    torch.save(
+        {"model_name": payload["model_name"], "model_state_dict": quantized.state_dict()},
+        args.output,
+    )
     print(f"QAT checkpoint: {args.output}")
 
 

@@ -8,7 +8,9 @@ from pathlib import Path
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Build a TensorRT FP16 engine when trtexec is available.")
+    parser = argparse.ArgumentParser(
+        description="Build a TensorRT FP16 engine when trtexec is available."
+    )
     parser.add_argument("--onnx", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
     args = parser.parse_args()
