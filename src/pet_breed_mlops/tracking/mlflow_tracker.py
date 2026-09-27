@@ -4,6 +4,7 @@ from pathlib import Path
 from typing import Any
 
 import mlflow
+import torch
 import yaml
 
 
@@ -52,10 +53,13 @@ class MLflowTracker:
     def log_artifact(self, path: str | Path, artifact_path: str | None = None) -> None:
         mlflow.log_artifact(str(path), artifact_path=artifact_path)
 
-    def log_pytorch_model(self, model: Any) -> None:
+    def log_pytorch_model(self, model: Any, *, image_size: int, num_classes: int = 37) -> None:
+        model.eval()
+        input_example = torch.zeros(1, 3, image_size, image_size)
         mlflow.pytorch.log_model(
             model,
-            artifact_path="model",
+            name="model",
+            input_example=input_example,
             registered_model_name=self.registered_model_name,
         )
 
