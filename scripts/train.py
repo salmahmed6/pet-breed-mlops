@@ -10,7 +10,11 @@ from pet_breed_mlops.training.trainer import train_model
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Train a pet breed classifier.")
-    parser.add_argument("--model", required=True, choices=["resnet18", "resnet50", "mobilenet_v3_small"])
+    parser.add_argument(
+        "--model",
+        required=True,
+        choices=["resnet18", "resnet50", "mobilenet_v3_small"],
+    )
     parser.add_argument("--epochs", type=int, default=None)
     parser.add_argument("--max-batches", type=int, default=None)
     parser.add_argument("--config", type=Path, default=Path("configs/training.yaml"))
@@ -43,8 +47,14 @@ def main() -> None:
         max_batches=args.max_batches,
     )
 
-    print(f"Best validation top-1: {result['best_val_top_1_accuracy']:.4f}", flush=True)
-    print(f"Best validation macro-F1: {result['best_val_macro_f1']:.4f}", flush=True)
+    print(
+        f"Best validation top-1: {result['best_val_top_1_accuracy']:.4f}",
+        flush=True,
+    )
+    print(
+        f"Best validation macro-F1: {result['best_val_macro_f1']:.4f}",
+        flush=True,
+    )
     print(f"Checkpoint: {result['checkpoint_path']}", flush=True)
 
 
