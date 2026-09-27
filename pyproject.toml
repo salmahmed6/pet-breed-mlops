@@ -39,6 +39,8 @@ dev = [
     "dvc>=3.50,<4.0",
 ]
 
+loadtest = ["locust>=2.0,<3.0"]
+
 [tool.setuptools]
 package-dir = {"" = "src"}
 
