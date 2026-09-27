@@ -1,6 +1,8 @@
 import json
 from pathlib import Path
 
+import pytest
+
 from pet_breed_mlops.labels import EXPECTED_CLASSES, load_label_map
 from scripts.create_label_map import build_label_map
 
@@ -23,6 +25,7 @@ def test_label_map_is_sorted_deterministically() -> None:
     assert breeds == sorted(breeds)
 
 
+@pytest.mark.data
 def test_generated_mapping_matches_committed_reference() -> None:
     generated = build_label_map(DATASET_ROOT)
 
