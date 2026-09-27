@@ -46,6 +46,13 @@ class MLflowTracker:
     def log_artifact(self, path: str | Path, artifact_path: str | None = None) -> None:
         mlflow.log_artifact(str(path), artifact_path=artifact_path)
 
+    def log_pytorch_model(self, model: Any) -> None:
+        mlflow.pytorch.log_model(
+            model,
+            artifact_path="model",
+            registered_model_name=self.registered_model_name,
+        )
+
     def finish(self) -> None:
         if self.run is not None:
             mlflow.end_run()
