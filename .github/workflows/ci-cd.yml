@@ -40,8 +40,10 @@ jobs:
       - name: Format check
         run: python -m ruff format --check .
 
+      # Dataset-dependent tests require DVC-managed Oxford-IIIT Pet data.
+      # CI remains data-independent because no DVC remote is configured.
       - name: Unit tests
-        run: python -m pytest -q
+        run: python -m pytest -q -m "not data"
 
       - name: Validate committed model baseline
         run: |
