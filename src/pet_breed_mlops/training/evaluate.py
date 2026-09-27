@@ -45,14 +45,21 @@ def evaluate_checkpoint(
             y_pred.extend(logits.argmax(dim=1).tolist())
 
     metrics = calculate_metrics(y_true, y_pred)
+    matrix = confusion_matrix(y_true, y_pred, 37)
+    per_class = {}
+    for class_index in range(37):
+        total = int(matrix[class_index].sum())
+        correct = int(matrix[class_index, class_index])
+        per_class[str(class_index)] = {
+            "support": total,
+            "accuracy": correct / total if total else 0.0,
+        }
+
     return {
         **metrics,
         "split": split,
-        "confusion_matrix": confusion_matrix(
-            y_true,
-            y_pred,
-            37,
-        ).tolist(),
+        "confusion_matrix": matrix.tolist(),
+        "per_class": per_class,
     }
 
 
