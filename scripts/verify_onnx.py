@@ -10,8 +10,8 @@ import torch
 from pet_breed_mlops.models.factory import create_model
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser(description="Verify PyTorch and ONNX logits agree.")
+def main():
+    parser = argparse.ArgumentParser()
     parser.add_argument("--checkpoint", required=True, type=Path)
     parser.add_argument("--onnx", required=True, type=Path)
     parser.add_argument("--tolerance", type=float, default=1e-4)
@@ -27,14 +27,11 @@ def main() -> None:
         torch_logits = model(sample).numpy()
 
     session = ort.InferenceSession(str(args.onnx), providers=["CPUExecutionProvider"])
-    onnx_logits = session.run(["logits"], {"images": sample.numpy()})[0]
-
+    onnx_logits = session.run(None, {"images": sample.numpy().astype(np.float32)})[0]
     max_error = float(np.max(np.abs(torch_logits - onnx_logits)))
     print(f"Max absolute logit error: {max_error:.8f}")
     if max_error > args.tolerance:
-        raise SystemExit(
-            f"ONNX agreement failed: {max_error:.8f} > {args.tolerance:.8f}"
-        )
+        raise SystemExit(f"ONNX agreement failed: {max_error:.8f} > {args.tolerance:.8f}")
 
 
 if __name__ == "__main__":
