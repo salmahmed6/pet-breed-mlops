@@ -44,6 +44,9 @@ where = ["src"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
+markers = [
+    "data: tests requiring DVC-managed Oxford-IIIT Pet dataset artifacts",
+]
 
 [tool.ruff]
 line-length = 100

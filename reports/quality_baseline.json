@@ -1,0 +1,7 @@
+{
+  "model": "resnet18",
+  "split": "val",
+  "top_1_accuracy": 0.10,
+  "baseline_scope": "Sprint 2 smoke run: 1 epoch, max 5 training batches",
+  "source": "Issue #22 smoke-test result"
+}
