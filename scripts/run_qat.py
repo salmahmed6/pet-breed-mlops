@@ -34,7 +34,10 @@ def main():
         int(config["training"]["batch_size"]),
         int(config["data"]["num_workers"]),
     )
-    optimizer = optim.AdamW(model.parameters(), lr=float(config["training"]["learning_rate"]))
+    optimizer = optim.AdamW(
+        model.parameters(),
+        lr=float(config["training"]["learning_rate"]),
+    )
     criterion = nn.CrossEntropyLoss()
 
     for _ in range(args.epochs):
@@ -49,7 +52,13 @@ def main():
     model.eval()
     quantized = torch.ao.quantization.convert(model, inplace=False)
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    torch.save({"model_name": payload["model_name"], "model_state_dict": quantized.state_dict()}, args.output)
+    torch.save(
+        {
+            "model_name": payload["model_name"],
+            "model_state_dict": quantized.state_dict(),
+        },
+        args.output,
+    )
     print(f"QAT checkpoint: {args.output}")
 
 
