@@ -12,6 +12,7 @@ import yaml
 from pet_breed_mlops.data.loaders import create_dataloaders
 from pet_breed_mlops.models.factory import create_model
 from pet_breed_mlops.optimization import batch_sizes_from_string, count_parameters, structured_prune_model
+from pet_breed_mlops.tracking.mlflow_tracker import MLflowTracker
 
 
 def load_model(checkpoint: Path, device: torch.device):
@@ -65,6 +66,8 @@ def main():
     parser.add_argument("--warmup", type=int, default=10)
     parser.add_argument("--iterations", type=int, default=50)
     parser.add_argument("--output", type=Path, default=Path("reports/optimization/benchmark.json"))
+    parser.add_argument("--mlflow-config", type=Path, default=Path("configs/mlflow.yaml"))
+    parser.add_argument("--no-mlflow", action="store_true")
     args = parser.parse_args()
 
     config = yaml.safe_load(args.config.read_text(encoding="utf-8"))
