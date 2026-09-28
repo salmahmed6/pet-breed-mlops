@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 import torch
 import yaml
@@ -37,7 +38,7 @@ def image_row(
     with Image.open(str(record["path"])) as image:
         rgb = image.convert("RGB")
         tensor = transform(rgb).unsqueeze(0)
-        array = torch.from_numpy(__import__("numpy").asarray(rgb)).float() / 255.0
+        array = torch.from_numpy(np.asarray(rgb)).float() / 255.0
         brightness = float(array.mean())
         contrast = float(array.std())
     with torch.inference_mode():
