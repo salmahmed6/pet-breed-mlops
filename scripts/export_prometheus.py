@@ -6,7 +6,6 @@ import argparse
 import json
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
-from threading import Thread
 
 from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
 from prometheus_client.registry import CollectorRegistry
@@ -54,7 +53,7 @@ def main() -> None:
 
     groups = scorecard.get("groups", [])
     for row in groups:
-        key = f'{row["corruption"]}_severity_{row["severity"]}'
+        key = f"{row['corruption']}_severity_{row['severity']}"
         detector_scores[f"{key}_embedding"] = (
             float(row["embedding_mmd"]),
             bool(row["embedding_drift"]),
