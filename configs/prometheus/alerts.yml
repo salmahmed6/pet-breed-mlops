@@ -1,0 +1,12 @@
+groups:
+  - name: pet-breed-monitoring
+    rules:
+      - alert: PetBreedDriftDetected
+        expr: max(pet_breed_drift_flag) >= 1
+        for: 30s
+        labels:
+          severity: warning
+          component: monitoring
+        annotations:
+          summary: "Pet-breed input drift detected"
+          description: "A configured drift detector crossed its threshold; forward the alert to the retraining workflow."
