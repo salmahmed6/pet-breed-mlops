@@ -9,10 +9,10 @@ import yaml
 
 from pet_breed_mlops.drift import (
     build_scorecard,
-    load_checkpoint_model,
     load_json_records,
     write_scorecard,
 )
+from pet_breed_mlops.serving import load_checkpoint_model
 
 
 def parse_args() -> argparse.Namespace:
