@@ -48,7 +48,8 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     scorecard = json.loads(args.scorecard.read_text(encoding="utf-8"))
-    metrics = create_metrics()
+    registry = CollectorRegistry()
+    metrics = create_metrics(registry)
     detector_scores: dict[str, tuple[float, bool]] = {}
 
     groups = scorecard.get("groups", [])
@@ -68,7 +69,7 @@ def main() -> None:
         )
 
     set_drift_metrics(metrics, detector_scores)
-    MetricsHandler.registry = metrics["requests"]._registry
+    MetricsHandler.registry = registry
     server = HTTPServer((args.host, args.port), MetricsHandler)
     print(f"Prometheus metrics: http://{args.host}:{args.port}/metrics")
     try:
