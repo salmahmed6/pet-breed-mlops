@@ -4,10 +4,16 @@ Issue #44 exposes the existing drift scorecard through two reproducible monitori
 
 ## 1. Generate actual monitoring datasets
 
-The scorecard runner writes the clean reference and corrupted current datasets from the protected test split:
+First generate the deterministic drift scorecard:
 
 ```powershell
 python -m scripts.run_drift_scorecard
+```
+
+Then materialize the actual reference/current rows used by Evidently:
+
+```powershell
+python -m scripts.prepare_monitoring_data
 ```
 
 Expected files:
