@@ -33,7 +33,9 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Receive retraining alerts locally.")
     parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--port", type=int, default=9001)
-    parser.add_argument("--output", type=Path, default=Path("reports/monitoring/retraining_alert.json"))
+    parser.add_argument(
+        "--output", type=Path, default=Path("reports/monitoring/retraining_alert.json")
+    )
     return parser.parse_args()
 
 

@@ -1,5 +1,6 @@
-from pathlib import Path
 import json
+from pathlib import Path
+
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -18,6 +19,16 @@ def test_monitoring_stack_configs() -> None:
 
 
 def test_dashboard_contains_required_panels() -> None:
-    dashboard = json.loads((ROOT / "configs/grafana/dashboards/pet-breed-monitoring.json").read_text())
+    dashboard = json.loads(
+        (ROOT / "configs/grafana/dashboards/pet-breed-monitoring.json").read_text()
+    )
     titles = {panel["title"] for panel in dashboard["panels"]}
-    assert {"Request Rate","Error Rate","Inference Latency P95","Latest Prediction Confidence","Abstentions","Drift Score","Drift Flags"}.issubset(titles)
+    assert {
+        "Request Rate",
+        "Error Rate",
+        "Inference Latency P95",
+        "Latest Prediction Confidence",
+        "Abstentions",
+        "Drift Score",
+        "Drift Flags",
+    }.issubset(titles)
