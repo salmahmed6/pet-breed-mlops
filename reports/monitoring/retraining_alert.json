@@ -1,0 +1,10 @@
+{
+  "alerts": [
+    {
+      "status": "firing",
+      "labels": {
+        "alertname": "PetBreedDriftDetected"
+      }
+    }
+  ]
+}
