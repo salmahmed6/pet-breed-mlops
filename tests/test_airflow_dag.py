@@ -16,8 +16,7 @@ def test_dag_source_is_valid_python() -> None:
 
 
 def test_dag_import_and_structure() -> None:
-    airflow = pytest.importorskip("airflow")
-    del airflow
+    pytest.importorskip("airflow.models")
 
     from airflow.models import DagBag
 
