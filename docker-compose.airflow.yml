@@ -14,6 +14,7 @@ services:
       AIRFLOW__CORE__LOAD_EXAMPLES: "false"
       AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "false"
       AIRFLOW__CORE__LOAD_DEFAULT_CONNECTIONS: "false"
+      AIRFLOW__EXECUTION_API__JWT_EXPIRATION_TIME: "7200"
       PYTHONPATH: /opt/airflow/project/src:/opt/airflow/project
     volumes:
       - ./airflow/dags:/opt/airflow/dags
