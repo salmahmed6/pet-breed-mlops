@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: docker/airflow.Dockerfile
-    command: standalone
+    command: ["python", "-m", "airflow", "standalone"]
     user: "0:0"
     ports:
       - "8080:8080"
