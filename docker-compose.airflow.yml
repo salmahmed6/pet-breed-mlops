@@ -5,6 +5,7 @@ services:
       dockerfile: docker/airflow.Dockerfile
     command: ["python", "-m", "airflow", "standalone"]
     user: "0:0"
+    shm_size: "2gb"
     ports:
       - "8080:8080"
     environment:
