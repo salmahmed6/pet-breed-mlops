@@ -1,9 +1,9 @@
 {
   "receiver": "retraining-webhook",
-  "status": "firing",
+  "status": "resolved",
   "alerts": [
     {
-      "status": "firing",
+      "status": "resolved",
       "labels": {
         "alertname": "PetBreedDriftDetected",
         "component": "monitoring",
@@ -14,7 +14,7 @@
         "summary": "Pet-breed input drift detected"
       },
       "startsAt": "2026-10-05T07:29:55.335Z",
-      "endsAt": "0001-01-01T00:00:00Z",
+      "endsAt": "2026-10-05T07:46:40.335Z",
       "generatorURL": "http://2ab3bbb17c65:9090/graph?g0.expr=max%28pet_breed_drift_flag%29+%3E%3D+1&g0.tab=1",
       "fingerprint": "ff7d8a5aa0d6b194"
     }
