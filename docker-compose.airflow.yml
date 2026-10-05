@@ -1,0 +1,25 @@
+services:
+  airflow:
+    build:
+      context: .
+      dockerfile: docker/airflow.Dockerfile
+    command: standalone
+    ports:
+      - "8080:8080"
+    environment:
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "false"
+      AIRFLOW__CORE__LOAD_DEFAULT_CONNECTIONS: "false"
+      PYTHONPATH: /opt/airflow/project
+    volumes:
+      - ./airflow:/opt/airflow/dags
+      - ./:/opt/airflow/project
+      - airflow_home:/opt/airflow
+    healthcheck:
+      test: ["CMD", "airflow", "jobs", "check", "--job-type", "SchedulerJob"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+volumes:
+  airflow_home:
