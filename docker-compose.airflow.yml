@@ -9,6 +9,7 @@ services:
       - "8080:8080"
     environment:
       AIRFLOW_HOME: /opt/airflow/home
+      AIRFLOW__CORE__DAGS_FOLDER: /opt/airflow/dags
       AIRFLOW__CORE__LOAD_EXAMPLES: "false"
       AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "false"
       AIRFLOW__CORE__LOAD_DEFAULT_CONNECTIONS: "false"
