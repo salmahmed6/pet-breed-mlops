@@ -70,11 +70,23 @@ def main() -> None:
         sys.argv = previous
 
     payload = json.loads(args.output_json.read_text(encoding="utf-8"))
-    drift_detected = _contains_trigger(payload)
+    groups = payload.get("groups", [])
+    drift_detected = any(
+        bool(group.get("embedding_drift"))
+        or bool(group.get("pixel_drift"))
+        or bool(group.get("confidence_drift_flag"))
+        for group in groups
+        if isinstance(group, dict)
+    ) or _contains_trigger(payload)
 
     decision = {
         "drift_detected": drift_detected,
         "retraining_required": drift_detected,
+        "trigger_reasons": [
+            key
+            for key in ("embedding_drift", "pixel_drift", "confidence_drift_flag")
+            if any(bool(group.get(key)) for group in groups if isinstance(group, dict))
+        ],
         "scorecard": str(args.output_json),
     }
     args.decision_file.write_text(json.dumps(decision, indent=2), encoding="utf-8")
