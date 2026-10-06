@@ -65,14 +65,15 @@ def compare_quality(
         )
 
     required_top_1 = production_top_1 + QUALITY_THRESHOLD
-    accepted = candidate_top_1 >= required_top_1
+    delta = candidate_top_1 - production_top_1
+    accepted = delta >= QUALITY_THRESHOLD - 1e-12
     return {
         "accepted": accepted,
         "production_top_1_accuracy": production_top_1,
         "candidate_top_1_accuracy": candidate_top_1,
         "required_candidate_top_1_accuracy": required_top_1,
         "minimum_delta": QUALITY_THRESHOLD,
-        "delta": candidate_top_1 - production_top_1,
+        "delta": delta,
     }
 
 

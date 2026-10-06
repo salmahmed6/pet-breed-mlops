@@ -35,6 +35,16 @@ def test_quality_gate_accepts_exact_minus_one_percent_boundary() -> None:
     assert decision["required_candidate_top_1_accuracy"] == pytest.approx(0.79)
 
 
+def test_exact_one_percent_drop_is_accepted() -> None:
+    result = compare_quality(
+        production_top_1=0.1,
+        candidate_top_1=0.09,
+    )
+
+    assert result["accepted"] is True
+    assert result["delta"] == pytest.approx(-0.01)
+
+
 def test_quality_gate_rejects_below_minus_one_percent_boundary() -> None:
     decision = compare_quality(0.80, 0.789999)
 
