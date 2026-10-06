@@ -9,6 +9,7 @@ from scripts.quality_gate import (
     QUALITY_THRESHOLD,
     compare_quality,
     load_production_top_1,
+    promote_registered_version,
 )
 
 
@@ -70,3 +71,48 @@ def test_quality_gate_rejects_invalid_accuracy(tmp_path: Path) -> None:
 
     with pytest.raises(ValueError, match="between 0 and 1"):
         load_production_top_1(baseline)
+
+
+class FakeMlflowClient:
+    def __init__(self) -> None:
+        self.calls: list[tuple] = []
+
+    def set_model_version_tag(
+        self,
+        model_name: str,
+        version: str,
+        key: str,
+        value: str,
+    ) -> None:
+        self.calls.append(("tag", model_name, version, key, value))
+
+    def set_registered_model_alias(
+        self,
+        model_name: str,
+        alias: str,
+        version: str,
+    ) -> None:
+        self.calls.append(("alias", model_name, alias, version))
+
+
+def test_accepted_candidate_is_promoted_to_production() -> None:
+    client = FakeMlflowClient()
+
+    promote_registered_version(
+        client,
+        registered_model_name="PetBreedClassifier",
+        version="7",
+        production_top_1=0.80,
+        candidate_top_1=0.79,
+    )
+
+    assert ("tag", "PetBreedClassifier", "7", "quality_gate_decision", "accepted") in client.calls
+    assert ("tag", "PetBreedClassifier", "7", "top_1_accuracy", "0.79000000") in client.calls
+    assert (
+        "tag",
+        "PetBreedClassifier",
+        "7",
+        "production_baseline_top_1_accuracy",
+        "0.80000000",
+    ) in client.calls
+    assert ("alias", "PetBreedClassifier", "Production", "7") in client.calls
