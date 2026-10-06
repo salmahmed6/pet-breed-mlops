@@ -15,9 +15,11 @@ from airflow import DAG
 PROJECT_ROOT = Path("/opt/airflow/project")
 REPORT_DIR = PROJECT_ROOT / "reports" / "retraining"
 CANDIDATE_DIR = PROJECT_ROOT / "artifacts" / "retraining" / "candidate"
-TRAINING_CONFIG = PROJECT_ROOT / "configs" / "training.yaml"
 CANDIDATE_CHECKPOINT = CANDIDATE_DIR / "resnet18_best.pt"
 CANDIDATE_REPORT = REPORT_DIR / "candidate_evaluation.json"
+QUALITY_DECISION = REPORT_DIR / "quality_gate_decision.json"
+TRAINING_CONFIG = PROJECT_ROOT / "configs" / "training_airflow.yaml"
+MLFLOW_CONFIG = PROJECT_ROOT / "configs" / "mlflow.yaml"
 
 
 def _run(command: list[str]) -> None:
@@ -49,11 +51,11 @@ def retrain() -> None:
             "--model",
             "resnet18",
             "--config",
-            str(PROJECT_ROOT / "configs" / "training_airflow.yaml"),
+            str(TRAINING_CONFIG),
             "--output-dir",
             str(CANDIDATE_DIR),
             "--report",
-            str(PROJECT_ROOT / "reports" / "retraining" / "candidate_training.json"),
+            str(REPORT_DIR / "candidate_training.json"),
         ]
     )
 
@@ -69,7 +71,7 @@ def evaluate_candidate() -> None:
             "--checkpoint",
             str(CANDIDATE_CHECKPOINT),
             "--config",
-            str(PROJECT_ROOT / "configs" / "training_airflow.yaml"),
+            str(TRAINING_CONFIG),
             "--output",
             str(CANDIDATE_REPORT),
         ]
@@ -86,15 +88,17 @@ def quality_gate() -> None:
             str(PROJECT_ROOT / "reports" / "quality_baseline.json"),
             "--candidate",
             str(CANDIDATE_REPORT),
-            "--minimum-delta",
-            "0.0",
+            "--decision",
+            str(QUALITY_DECISION),
+            "--mlflow-config",
+            str(MLFLOW_CONFIG),
         ]
     )
 
 
 with DAG(
     dag_id="pet_breed_drift_retraining",
-    description="Drift -> candidate retraining -> evaluation -> quality gate",
+    description="Drift -> candidate retraining -> evaluation -> quality gate -> promotion",
     start_date=datetime(2026, 1, 1),
     schedule=None,
     catchup=False,
