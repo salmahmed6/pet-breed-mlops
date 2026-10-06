@@ -49,7 +49,7 @@ def test_dag_uses_resource_safe_training_and_quality_gate_configuration() -> Non
     assert "candidate_training.json" in source
     assert "candidate_evaluation.json" in source
     assert "quality_gate_decision.json" in source
-    assert "configs/mlflow.yaml" in source
+    assert "MLFLOW_CONFIG" in source
     assert '"--decision"' in source
     assert '"--mlflow-config"' in source
 
