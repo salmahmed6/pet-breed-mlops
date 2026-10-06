@@ -181,9 +181,7 @@ def run_quality_gate(
             {
                 "production_top_1_accuracy": production_top_1,
                 "candidate_top_1_accuracy": candidate_top_1,
-                "required_candidate_top_1_accuracy": decision[
-                    "required_candidate_top_1_accuracy"
-                ],
+                "required_candidate_top_1_accuracy": decision["required_candidate_top_1_accuracy"],
                 "candidate_delta": decision["delta"],
             }
         )
