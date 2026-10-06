@@ -74,12 +74,18 @@ def main() -> None:
 
     # Reuse the existing Sprint 4 scorecard implementation.
     run_scorecard_args = [
-        "--checkpoint", str(args.checkpoint),
-        "--manifest", str(args.manifest),
-        "--corrupted-metadata", str(args.corrupted_metadata),
-        "--config", str(args.config),
-        "--output-json", str(args.output_json),
-        "--output-csv", str(args.output_csv),
+        "--checkpoint",
+        str(args.checkpoint),
+        "--manifest",
+        str(args.manifest),
+        "--corrupted-metadata",
+        str(args.corrupted_metadata),
+        "--config",
+        str(args.config),
+        "--output-json",
+        str(args.output_json),
+        "--output-csv",
+        str(args.output_csv),
     ]
 
     import sys

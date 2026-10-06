@@ -30,9 +30,7 @@ def main() -> None:
     config = yaml.safe_load(args.config.read_text(encoding="utf-8"))
     checkpoint = args.checkpoint
     if checkpoint.name != f"{args.model}_best.pt":
-        raise ValueError(
-            f"Candidate checkpoint {checkpoint} does not match model {args.model}."
-        )
+        raise ValueError(f"Candidate checkpoint {checkpoint} does not match model {args.model}.")
 
     metrics = evaluate_checkpoint(
         checkpoint_path=checkpoint,
