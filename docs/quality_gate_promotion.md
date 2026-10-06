@@ -82,3 +82,11 @@ Boundary coverage includes:
 - invalid metric values.
 
 A complete real promotion run should only be claimed when MLflow has actually registered the candidate and moved the Production alias. No such result is fabricated by this implementation.
+
+## Rollback
+
+A rejected candidate never changes the `Production` alias, so rejection is a no-op for the live model.
+
+If a promoted version later needs to be rolled back, the MLflow `Production` alias can be moved back to the previously known-good model version. The quality-gate decision and model-version tags provide the audit trail needed to identify the promoted version and its production baseline.
+
+No rollback result is claimed until the alias change has actually been performed in MLflow.
