@@ -55,9 +55,17 @@ def test_airflow_training_configuration_is_resource_safe() -> None:
     assert config["data"]["image_size"] == 224
 
 
-def test_dataloaders_disable_worker_and_pinning_overhead() -> None:
+def test_dataloaders_disable_worker_and_pinning_overhead(tmp_path: Path) -> None:
+    manifest_path = tmp_path / "manifest.json"
+    manifest_path.write_text(
+        '[{"split": "train", "path": "unused.jpg"}, '
+        '{"split": "val", "path": "unused.jpg"}, '
+        '{"split": "test", "path": "unused.jpg"}]',
+        encoding="utf-8",
+    )
+
     loaders = create_dataloaders(
-        manifest_path="data/processed/manifest.json",
+        manifest_path=str(manifest_path),
         image_size=224,
         batch_size=8,
         num_workers=0,
