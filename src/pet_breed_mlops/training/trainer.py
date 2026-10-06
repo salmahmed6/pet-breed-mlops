@@ -26,11 +26,13 @@ def _run_epoch(
     model.train(training)
     total_loss = 0.0
     y_true, y_pred = [], []
+    batch_count = 0
 
-    for batch_index, (images, labels) in enumerate(loader):
-        if max_batches is not None and batch_index >= max_batches:
+    for images, labels in loader:
+        if max_batches is not None and batch_count >= max_batches:
             break
 
+        batch_count += 1
         images, labels = images.to(device), labels.to(device)
 
         if training:
@@ -51,7 +53,7 @@ def _run_epoch(
     if not y_true:
         raise ValueError("No batches were processed.")
 
-    return total_loss / len(y_true), calculate_metrics(y_true, y_pred)
+    return total_loss / len(y_true), calculate_metrics(y_true, y_pred), batch_count
 
 
 def train_model(
@@ -115,7 +117,7 @@ def train_model(
     history = []
 
     for epoch in range(1, epochs + 1):
-        train_loss, train_metrics = _run_epoch(
+        train_loss, train_metrics, train_batches = _run_epoch(
             model,
             train_loader,
             criterion,
@@ -123,7 +125,7 @@ def train_model(
             optimizer,
             max_batches,
         )
-        val_loss, val_metrics = _run_epoch(
+        val_loss, val_metrics, val_batches = _run_epoch(
             model,
             val_loader,
             criterion,
@@ -136,9 +138,11 @@ def train_model(
             "train_loss": train_loss,
             "train_top_1_accuracy": train_metrics["top_1_accuracy"],
             "train_macro_f1": train_metrics["macro_f1"],
+            "train_batches": train_batches,
             "val_loss": val_loss,
             "val_top_1_accuracy": val_metrics["top_1_accuracy"],
             "val_macro_f1": val_metrics["macro_f1"],
+            "val_batches": val_batches,
         }
         history.append(record)
         print(

@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 
 import pytest
@@ -10,6 +11,7 @@ from pet_breed_mlops.training.metrics import (
     calculate_metrics,
     confusion_matrix,
 )
+from pet_breed_mlops.training.trainer import train_model
 
 MANIFEST_PATH = Path("data/processed/manifest.json")
 
@@ -168,3 +170,27 @@ def test_labels_are_within_37_classes():
 
     assert len(labels) == EXPECTED_NUM_CLASSES
     assert labels == set(range(EXPECTED_NUM_CLASSES))
+
+
+@pytest.mark.data
+def test_train_model_max_batches_limits_training_and_validation(tmp_path: Path):
+    result = train_model(
+        model_name="resnet18",
+        manifest_path=MANIFEST_PATH,
+        image_size=224,
+        batch_size=8,
+        num_workers=0,
+        epochs=1,
+        learning_rate=0.0001,
+        weight_decay=0.0001,
+        seed=42,
+        output_dir=tmp_path,
+        max_batches=1,
+    )
+
+    history = json.loads((tmp_path / "resnet18_history.json").read_text(encoding="utf-8"))
+
+    assert len(history) == 1
+    assert history[0]["train_batches"] == 1
+    assert history[0]["val_batches"] == 1
+    assert result["checkpoint_path"] == str(tmp_path / "resnet18_best.pt")

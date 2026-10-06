@@ -1,0 +1,25 @@
+services:
+  airflow:
+    build:
+      context: .
+      dockerfile: docker/airflow.Dockerfile
+    command: ["python", "-m", "airflow", "standalone"]
+    user: "0:0"
+    shm_size: "2gb"
+    ports:
+      - "8080:8080"
+    environment:
+      AIRFLOW_HOME: /opt/airflow/home
+      AIRFLOW__CORE__DAGS_FOLDER: /opt/airflow/dags
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "false"
+      AIRFLOW__CORE__LOAD_DEFAULT_CONNECTIONS: "false"
+      AIRFLOW__EXECUTION_API__JWT_EXPIRATION_TIME: "7200"
+      PYTHONPATH: /opt/airflow/project/src:/opt/airflow/project
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./:/opt/airflow/project
+      - airflow_home:/opt/airflow/home
+
+volumes:
+  airflow_home:
