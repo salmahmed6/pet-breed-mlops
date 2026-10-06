@@ -75,8 +75,8 @@ def main() -> None:
         "split": "val",
         "top_1_accuracy": result["best_val_top_1_accuracy"],
         "macro_f1": result["best_val_macro_f1"],
-        "checkpoint_path": result["checkpoint_path"],
-        "history_path": result["history_path"],
+        "checkpoint_path": str(args.output_dir / f"{args.model}_best.pt"),
+        "history_path": str(args.output_dir / f"{args.model}_history.json"),
         "device": result["device"],
         "data_policy": {
             "fit_split": "train",
@@ -87,8 +87,6 @@ def main() -> None:
     report_path = run_dir / "candidate_training.json"
     report_path.write_text(json.dumps(report, indent=2), encoding="utf-8")
     _promote_run(run_dir, args.output_dir)
-    report["checkpoint_path"] = str(args.output_dir / f"{args.model}_best.pt")
-    report["history_path"] = str(args.output_dir / f"{args.model}_history.json")
     args.report.write_text(json.dumps(report, indent=2), encoding="utf-8")
     print(json.dumps(report, indent=2))
 
