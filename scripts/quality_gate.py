@@ -36,8 +36,8 @@ def load_production_top_1(
 ) -> tuple[float, str]:
     """Read Production accuracy from MLflow when available, otherwise the evaluation artifact."""
     if tracking_uri and registered_model_name:
-        client = MlflowClient(tracking_uri=tracking_uri)
         try:
+            client = MlflowClient(tracking_uri=tracking_uri)
             version = client.get_model_version_by_alias(registered_model_name, alias)
             value = version.tags.get("top_1_accuracy")
             if value is not None:
@@ -89,6 +89,40 @@ def _find_registered_version(client: MlflowClient, model_name: str, run_id: str)
             f"MLflow did not return a registered version for run {run_id} and model {model_name}."
         )
     return max(matches, key=lambda version: int(version.version))
+
+
+def promote_registered_version(
+    client: MlflowClient,
+    *,
+    registered_model_name: str,
+    version: str,
+    production_top_1: float,
+    candidate_top_1: float,
+) -> None:
+    """Tag an accepted version and move the Production alias to it."""
+    client.set_model_version_tag(
+        registered_model_name,
+        version,
+        "top_1_accuracy",
+        f"{candidate_top_1:.8f}",
+    )
+    client.set_model_version_tag(
+        registered_model_name,
+        version,
+        "quality_gate_decision",
+        "accepted",
+    )
+    client.set_model_version_tag(
+        registered_model_name,
+        version,
+        "production_baseline_top_1_accuracy",
+        f"{production_top_1:.8f}",
+    )
+    client.set_registered_model_alias(
+        registered_model_name,
+        PRODUCTION_ALIAS,
+        version,
+    )
 
 
 def run_quality_gate(
@@ -175,28 +209,12 @@ def run_quality_gate(
                 serialization_format="pickle",
             )
             version = _find_registered_version(client, registered_model_name, run.info.run_id)
-            client.set_model_version_tag(
-                registered_model_name,
-                version.version,
-                "top_1_accuracy",
-                f"{candidate_top_1:.8f}",
-            )
-            client.set_model_version_tag(
-                registered_model_name,
-                version.version,
-                "quality_gate_decision",
-                "accepted",
-            )
-            client.set_model_version_tag(
-                registered_model_name,
-                version.version,
-                "production_baseline_top_1_accuracy",
-                f"{production_top_1:.8f}",
-            )
-            client.set_registered_model_alias(
-                registered_model_name,
-                PRODUCTION_ALIAS,
-                version.version,
+            promote_registered_version(
+                client,
+                registered_model_name=registered_model_name,
+                version=version.version,
+                production_top_1=production_top_1,
+                candidate_top_1=candidate_top_1,
             )
             decision["promoted_version"] = int(version.version)
             decision["mlflow_run_id"] = run.info.run_id
