@@ -30,6 +30,18 @@ def test_dag_import_and_structure() -> None:
         "evaluate_candidate",
         "quality_gate",
     ]
+    assert dag.get_task("check_drift").downstream_task_ids == {"retrain_candidate"}
+    assert dag.get_task("retrain_candidate").downstream_task_ids == {"evaluate_candidate"}
+    assert dag.get_task("evaluate_candidate").downstream_task_ids == {"quality_gate"}
+
+
+def test_dag_uses_absolute_paths_and_airflow_3_operators() -> None:
+    source = DAG_PATH.read_text(encoding="utf-8")
+    assert "airflow.providers.standard.operators.python" in source
+    assert "TriggerRule" not in source
+    assert "Path(\"/opt/airflow/project\")" in source
+    assert "str(CANDIDATE_CHECKPOINT)" in source
+    assert "str(CANDIDATE_REPORT)" in source
 
 
 def test_retraining_does_not_fit_test_split() -> None:

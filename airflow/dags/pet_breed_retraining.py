@@ -9,12 +9,15 @@ from datetime import datetime
 from pathlib import Path
 
 from airflow import DAG
-from airflow.operators.python import PythonOperator, ShortCircuitOperator
-from airflow.utils.trigger_rule import TriggerRule
+from airflow.providers.standard.operators.python import PythonOperator, ShortCircuitOperator
 
 
 PROJECT_ROOT = Path("/opt/airflow/project")
 REPORT_DIR = PROJECT_ROOT / "reports" / "retraining"
+CANDIDATE_DIR = PROJECT_ROOT / "artifacts" / "retraining" / "candidate"
+TRAINING_CONFIG = PROJECT_ROOT / "configs" / "training.yaml"
+CANDIDATE_CHECKPOINT = CANDIDATE_DIR / "resnet18_best.pt"
+CANDIDATE_REPORT = REPORT_DIR / "candidate_evaluation.json"
 
 
 def _run(command: list[str]) -> None:
@@ -45,10 +48,30 @@ def retrain() -> None:
             "scripts.run_retraining",
             "--model",
             "resnet18",
+            "--config",
+            str(TRAINING_CONFIG),
             "--output-dir",
-            "artifacts/retraining/candidate",
+            str(CANDIDATE_DIR),
             "--report",
-            "reports/retraining/candidate_evaluation.json",
+            str(CANDIDATE_REPORT),
+        ]
+    )
+
+
+def evaluate_candidate() -> None:
+    _run(
+        [
+            sys.executable,
+            "-m",
+            "scripts.evaluate_candidate",
+            "--model",
+            "resnet18",
+            "--checkpoint",
+            str(CANDIDATE_CHECKPOINT),
+            "--config",
+            str(TRAINING_CONFIG),
+            "--output",
+            str(CANDIDATE_REPORT),
         ]
     )
 
@@ -60,9 +83,9 @@ def quality_gate() -> None:
             "-m",
             "scripts.quality_gate",
             "--baseline",
-            "reports/quality_baseline.json",
+            str(PROJECT_ROOT / "reports" / "quality_baseline.json"),
             "--candidate",
-            "reports/retraining/candidate_evaluation.json",
+            str(CANDIDATE_REPORT),
             "--minimum-delta",
             "0.0",
         ]
@@ -89,15 +112,12 @@ with DAG(
 
     evaluate = PythonOperator(
         task_id="evaluate_candidate",
-        python_callable=lambda: Path(
-            PROJECT_ROOT / "reports/retraining/candidate_evaluation.json"
-        ).exists(),
+        python_callable=evaluate_candidate,
     )
 
     gate = PythonOperator(
         task_id="quality_gate",
         python_callable=quality_gate,
-        trigger_rule=TriggerRule.ALL_SUCCESS,
     )
 
     drift_check >> retraining >> evaluate >> gate

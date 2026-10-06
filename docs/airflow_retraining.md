@@ -21,12 +21,14 @@ The drift scorecard may inspect the test split for monitoring comparison; this i
 
 ## Local execution
 
-Build and start the isolated Airflow environment:
+Build and start the isolated Airflow environment from the repository root:
 
 ```powershell
 docker compose -f docker-compose.airflow.yml build
 docker compose -f docker-compose.airflow.yml up -d
 ```
+
+The service runs Airflow 3.3.2 in the project-mounted container. The project is mounted at `/opt/airflow/project`, while the DAGs are mounted at `/opt/airflow/dags`.
 
 Open Airflow at http://localhost:8080.
 
@@ -37,18 +39,21 @@ docker compose -f docker-compose.airflow.yml exec airflow airflow dags list
 docker compose -f docker-compose.airflow.yml exec airflow airflow dags show pet_breed_drift_retraining
 ```
 
-Trigger a manual run:
+Trigger a manual run with the Airflow 3 CLI:
 
 ```powershell
 docker compose -f docker-compose.airflow.yml exec airflow airflow dags trigger pet_breed_drift_retraining
 ```
 
-Inspect the run:
+Inspect the run and task logs:
 
 ```powershell
 docker compose -f docker-compose.airflow.yml exec airflow airflow dags list-runs -d pet_breed_drift_retraining
-docker compose -f docker-compose.airflow.yml logs --tail=200 airflow
+docker compose -f docker-compose.airflow.yml exec airflow airflow tasks list pet_breed_drift_retraining <run-id>
+docker compose -f docker-compose.airflow.yml exec airflow airflow tasks logs pet_breed_drift_retraining <run-id> retrain_candidate
 ```
+
+The current Airflow 3 task-log command requires the exact run ID returned by `airflow dags list-runs`. If the Docker Desktop engine is unavailable, the container commands cannot be executed from the local environment.
 
 ## Evidence artifacts
 
