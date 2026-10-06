@@ -11,7 +11,11 @@ The workflow is:
 3. Skip retraining when no drift is detected.
 4. Retrain a candidate model when drift is detected.
 5. Persist candidate validation metrics and checkpoint metadata.
-6. Run the existing quality gate against `reports/quality_baseline.json`.
+6. Evaluate the candidate on the validation split.
+7. Run the Sprint 5 quality gate against the Production baseline.
+8. Promote an accepted candidate to the MLflow `Production` alias; retain a rejected candidate without promotion.
+
+The quality threshold is enforced exactly as `candidate top-1 >= Production top-1 - 0.01`.
 
 ## Data protection
 
@@ -62,6 +66,7 @@ A successful drift-triggered run should produce:
 - `reports/monitoring/drift_scorecard.json`
 - `reports/retraining/drift_decision.json`
 - `reports/retraining/candidate_evaluation.json`
+- `reports/retraining/quality_gate_decision.json`
 - `artifacts/retraining/candidate/resnet18_best.pt`
 
 The DAG is manually triggerable and can be invoked by the monitoring integration in a later orchestration layer.
