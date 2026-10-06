@@ -8,9 +8,9 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-from airflow import DAG
 from airflow.providers.standard.operators.python import PythonOperator, ShortCircuitOperator
 
+from airflow import DAG
 
 PROJECT_ROOT = Path("/opt/airflow/project")
 REPORT_DIR = PROJECT_ROOT / "reports" / "retraining"
@@ -49,11 +49,11 @@ def retrain() -> None:
             "--model",
             "resnet18",
             "--config",
-            str(TRAINING_CONFIG),
+            str(PROJECT_ROOT / "configs" / "training_airflow.yaml"),
             "--output-dir",
             str(CANDIDATE_DIR),
             "--report",
-            str(CANDIDATE_REPORT),
+            str(PROJECT_ROOT / "reports" / "retraining" / "candidate_training.json"),
         ]
     )
 
@@ -69,7 +69,7 @@ def evaluate_candidate() -> None:
             "--checkpoint",
             str(CANDIDATE_CHECKPOINT),
             "--config",
-            str(TRAINING_CONFIG),
+            str(PROJECT_ROOT / "configs" / "training_airflow.yaml"),
             "--output",
             str(CANDIDATE_REPORT),
         ]

@@ -7,7 +7,6 @@ from pathlib import Path
 
 import pytest
 
-
 DAG_PATH = Path("airflow/dags/pet_breed_retraining.py")
 
 
@@ -39,9 +38,16 @@ def test_dag_uses_absolute_paths_and_airflow_3_operators() -> None:
     source = DAG_PATH.read_text(encoding="utf-8")
     assert "airflow.providers.standard.operators.python" in source
     assert "TriggerRule" not in source
-    assert "Path(\"/opt/airflow/project\")" in source
+    assert 'Path("/opt/airflow/project")' in source
     assert "str(CANDIDATE_CHECKPOINT)" in source
     assert "str(CANDIDATE_REPORT)" in source
+
+
+def test_dag_uses_airflow_resource_profile_and_separate_reports() -> None:
+    source = DAG_PATH.read_text(encoding="utf-8")
+    assert "training_airflow.yaml" in source
+    assert "candidate_training.json" in source
+    assert "candidate_evaluation.json" in source
 
 
 def test_retraining_does_not_fit_test_split() -> None:

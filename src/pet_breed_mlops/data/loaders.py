@@ -32,6 +32,8 @@ def create_dataloaders(
         batch_size=batch_size,
         shuffle=True,
         num_workers=num_workers,
+        pin_memory=False,
+        persistent_workers=False,
     )
 
     val_loader = DataLoader(
@@ -39,6 +41,8 @@ def create_dataloaders(
         batch_size=batch_size,
         shuffle=False,
         num_workers=num_workers,
+        pin_memory=False,
+        persistent_workers=False,
     )
 
     test_loader = DataLoader(
@@ -46,6 +50,8 @@ def create_dataloaders(
         batch_size=batch_size,
         shuffle=False,
         num_workers=num_workers,
+        pin_memory=False,
+        persistent_workers=False,
     )
 
     return train_loader, val_loader, test_loader
