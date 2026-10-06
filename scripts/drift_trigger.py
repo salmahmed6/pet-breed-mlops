@@ -7,8 +7,6 @@ import json
 from pathlib import Path
 from typing import Any
 
-import yaml
-
 from scripts.run_drift_scorecard import main as run_scorecard
 
 
@@ -35,13 +33,37 @@ def _contains_trigger(payload: Any) -> bool:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run drift scorecard and decide retraining.")
-    parser.add_argument("--checkpoint", type=Path, default=Path("artifacts/models/resnet18_best.pt"))
-    parser.add_argument("--manifest", type=Path, default=Path("data/processed/manifest.json"))
-    parser.add_argument("--corrupted-metadata", type=Path, default=Path("data/corrupted/metadata.json"))
+    parser.add_argument(
+        "--checkpoint",
+        type=Path,
+        default=Path("artifacts/models/resnet18_best.pt"),
+    )
+    parser.add_argument(
+        "--manifest",
+        type=Path,
+        default=Path("data/processed/manifest.json"),
+    )
+    parser.add_argument(
+        "--corrupted-metadata",
+        type=Path,
+        default=Path("data/corrupted/metadata.json"),
+    )
     parser.add_argument("--config", type=Path, default=Path("configs/monitoring.yaml"))
-    parser.add_argument("--output-json", type=Path, default=Path("reports/monitoring/drift_scorecard.json"))
-    parser.add_argument("--output-csv", type=Path, default=Path("reports/monitoring/drift_scorecard.csv"))
-    parser.add_argument("--decision-file", type=Path, default=Path("reports/retraining/drift_decision.json"))
+    parser.add_argument(
+        "--output-json",
+        type=Path,
+        default=Path("reports/monitoring/drift_scorecard.json"),
+    )
+    parser.add_argument(
+        "--output-csv",
+        type=Path,
+        default=Path("reports/monitoring/drift_scorecard.csv"),
+    )
+    parser.add_argument(
+        "--decision-file",
+        type=Path,
+        default=Path("reports/retraining/drift_decision.json"),
+    )
     return parser.parse_args()
 
 

@@ -13,7 +13,11 @@ from pet_breed_mlops.training.evaluate import evaluate_checkpoint
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Evaluate a retrained candidate checkpoint.")
-    parser.add_argument("--model", required=True, choices=["resnet18", "mobilenet_v3_small", "resnet50"])
+    parser.add_argument(
+        "--model",
+        required=True,
+        choices=["resnet18", "mobilenet_v3_small", "resnet50"],
+    )
     parser.add_argument("--checkpoint", type=Path, required=True)
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
