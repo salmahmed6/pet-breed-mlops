@@ -1,0 +1,10 @@
+{
+  "drift_detected": true,
+  "retraining_required": true,
+  "trigger_reasons": [
+    "embedding_drift",
+    "pixel_drift",
+    "confidence_drift_flag"
+  ],
+  "scorecard": "reports/monitoring/drift_scorecard.json"
+}
