@@ -9,6 +9,7 @@ from scripts.quality_gate import (
     QUALITY_THRESHOLD,
     compare_quality,
     load_production_top_1,
+    load_top_1,
     promote_registered_version,
 )
 
@@ -63,6 +64,13 @@ def test_quality_gate_loads_production_baseline_from_evaluation_artifact(
 
     assert accuracy == pytest.approx(0.83)
     assert source == f"artifact:{baseline}"
+
+
+def test_quality_gate_reports_missing_candidate_report(tmp_path: Path) -> None:
+    missing_candidate = tmp_path / "candidate.json"
+
+    with pytest.raises(FileNotFoundError, match="Quality gate report not found"):
+        load_top_1(missing_candidate)
 
 
 def test_quality_gate_rejects_invalid_accuracy(tmp_path: Path) -> None:

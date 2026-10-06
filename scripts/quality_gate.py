@@ -17,6 +17,9 @@ PRODUCTION_ALIAS = "Production"
 
 
 def load_top_1(path: Path) -> float:
+    if not path.is_file():
+        raise FileNotFoundError(f"Quality gate report not found: {path}")
+
     payload = json.loads(path.read_text(encoding="utf-8"))
     value = payload.get("top_1_accuracy")
     if not isinstance(value, (int, float)):
