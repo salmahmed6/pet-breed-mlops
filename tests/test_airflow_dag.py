@@ -43,11 +43,15 @@ def test_dag_uses_absolute_paths_and_airflow_3_operators() -> None:
     assert "str(CANDIDATE_REPORT)" in source
 
 
-def test_dag_uses_airflow_resource_profile_and_separate_reports() -> None:
+def test_dag_uses_resource_safe_training_and_quality_gate_configuration() -> None:
     source = DAG_PATH.read_text(encoding="utf-8")
     assert "training_airflow.yaml" in source
     assert "candidate_training.json" in source
     assert "candidate_evaluation.json" in source
+    assert "quality_gate_decision.json" in source
+    assert "configs/mlflow.yaml" in source
+    assert '"--decision"' in source
+    assert '"--mlflow-config"' in source
 
 
 def test_retraining_does_not_fit_test_split() -> None:
