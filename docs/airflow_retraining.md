@@ -35,25 +35,25 @@ Open Airflow at http://localhost:8080.
 Check the DAG:
 
 ```powershell
-docker compose -f docker-compose.airflow.yml exec airflow airflow dags list
-docker compose -f docker-compose.airflow.yml exec airflow airflow dags show pet_breed_drift_retraining
+docker compose -f docker-compose.airflow.yml exec airflow python -m airflow dags list
+docker compose -f docker-compose.airflow.yml exec airflow python -m airflow dags show pet_breed_drift_retraining
 ```
 
 Trigger a manual run with the Airflow 3 CLI:
 
 ```powershell
-docker compose -f docker-compose.airflow.yml exec airflow airflow dags trigger pet_breed_drift_retraining
+docker compose -f docker-compose.airflow.yml exec airflow python -m airflow dags trigger pet_breed_drift_retraining
 ```
 
-Inspect the run and task logs:
+Inspect the run and task states. First list all runs for the DAG, then replace `<run-id>` with the run you want to inspect:
 
 ```powershell
-docker compose -f docker-compose.airflow.yml exec airflow airflow dags list-runs -d pet_breed_drift_retraining
-docker compose -f docker-compose.airflow.yml exec airflow airflow tasks list pet_breed_drift_retraining <run-id>
-docker compose -f docker-compose.airflow.yml exec airflow airflow tasks logs pet_breed_drift_retraining <run-id> retrain_candidate
+docker compose -f docker-compose.airflow.yml exec airflow python -m airflow dags list-runs
+docker compose -f docker-compose.airflow.yml exec airflow python -m airflow tasks list pet_breed_drift_retraining <run-id>
+docker compose -f docker-compose.airflow.yml exec airflow python -m airflow tasks logs pet_breed_drift_retraining <run-id> retrain_candidate
 ```
 
-The current Airflow 3 task-log command requires the exact run ID returned by `airflow dags list-runs`. If the Docker Desktop engine is unavailable, the container commands cannot be executed from the local environment.
+The Airflow 3 CLI does not accept the legacy `-d` option for `dags list-runs`. If the Docker Desktop engine is unavailable, the container commands cannot be executed from the local environment.
 
 ## Evidence artifacts
 
