@@ -97,6 +97,13 @@ mlruns/
 # Keep committed reports explicitly with git add -f when needed.
 reports/generated/
 
+# Runtime retraining outputs; keep only intentionally committed reports.
+artifacts/retraining/local-validation/
+artifacts/retraining/.candidate-run-*/
+reports/retraining/local-validation-training.json
+reports/retraining/candidate_training.json
+reports/retraining/candidate_evaluation.json
+
 # ============================================================
 # Dataset files
 # ============================================================
