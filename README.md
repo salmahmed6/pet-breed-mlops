@@ -67,3 +67,21 @@ commands can be used directly as CI quality gates.
 ## Serving load tests
 
 Batch scoring and Locust load-test commands are documented in [docs/load_testing.md](docs/load_testing.md). Results are generated under `reports/serving/` and are never fabricated.
+
+## Final End-to-End Workflow and Evidence
+
+Issue #48 closes the final integration/evidence stage without duplicating earlier sprint implementation. The complete verification path is documented in [docs/final_end_to_end_evidence.md](docs/final_end_to_end_evidence.md).
+
+### Final workflow
+
+```text
+DVC data -> monitoring/drift scorecard -> alert -> Airflow retraining
+    -> candidate evaluation -> MLflow quality gate
+    -> Production promotion OR candidate rejection
+```
+
+For the final project submission, only locally verified runtime results should be reported. The repository intentionally does not invent MLflow registry state, monitoring screenshots, performance measurements, or peer-review evidence.
+
+### Final verification entry point
+
+See [docs/final_end_to_end_evidence.md](docs/final_end_to_end_evidence.md) for the exact commands, expected artifact paths, and final verification checklist.

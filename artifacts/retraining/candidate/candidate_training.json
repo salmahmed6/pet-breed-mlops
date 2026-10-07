@@ -1,0 +1,14 @@
+{
+  "model": "resnet18",
+  "split": "val",
+  "top_1_accuracy": 0.9184782608695652,
+  "macro_f1": 0.9162902547061094,
+  "checkpoint_path": "artifacts\\retraining\\candidate\\resnet18_best.pt",
+  "history_path": "artifacts\\retraining\\candidate\\resnet18_history.json",
+  "device": "cpu",
+  "data_policy": {
+    "fit_split": "train",
+    "selection_split": "val",
+    "protected_split": "test"
+  }
+}
