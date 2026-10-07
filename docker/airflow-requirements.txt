@@ -1,0 +1,12 @@
+# Runtime dependencies required by the existing ML package inside the Airflow image.
+numpy
+pillow
+pandas
+pyyaml
+scikit-learn
+matplotlib
+torch
+torchvision
+mlflow
+evidently
+prometheus-client

@@ -1,0 +1,229 @@
+{
+  "clean_reference": {
+    "samples": 32,
+    "accuracy": 0.09375
+  },
+  "thresholds": {
+    "embedding_mmd": 0.05,
+    "pixel_mmd": 0.1,
+    "confidence_drift": 0.05
+  },
+  "groups": [
+    {
+      "corruption": "brightness_down",
+      "severity": 1,
+      "samples": 32,
+      "accuracy": 0.0625,
+      "embedding_mmd": 0.003327567435291501,
+      "embedding_drift": false,
+      "pixel_mmd": 0.07218238982447267,
+      "pixel_drift": false,
+      "confidence_drift": 0.10651152660005891,
+      "confidence_drift_flag": true
+    },
+    {
+      "corruption": "brightness_down",
+      "severity": 2,
+      "samples": 32,
+      "accuracy": 0.0625,
+      "embedding_mmd": 0.013700320637853425,
+      "embedding_drift": false,
+      "pixel_mmd": 0.3846441937306537,
+      "pixel_drift": true,
+      "confidence_drift": 0.07205601141330918,
+      "confidence_drift_flag": true
+    },
+    {
+      "corruption": "brightness_down",
+      "severity": 3,
+      "samples": 32,
+      "accuracy": 0.03125,
+      "embedding_mmd": 0.04346262928277689,
+      "embedding_drift": false,
+      "pixel_mmd": 0.8002785359488929,
+      "pixel_drift": true,
+      "confidence_drift": 0.19135922151266316,
+      "confidence_drift_flag": true
+    },
+    {
+      "corruption": "brightness_up",
+      "severity": 1,
+      "samples": 32,
+      "accuracy": 0.09375,
+      "embedding_mmd": 0.0020591231442017577,
+      "embedding_drift": false,
+      "pixel_mmd": 0.04454289586032534,
+      "pixel_drift": false,
+      "confidence_drift": 0.0013261191937604618,
+      "confidence_drift_flag": false
+    },
+    {
+      "corruption": "brightness_up",
+      "severity": 2,
+      "samples": 32,
+      "accuracy": 0.09375,
+      "embedding_mmd": 0.009958188974120041,
+      "embedding_drift": false,
+      "pixel_mmd": 0.17104819996120346,
+      "pixel_drift": true,
+      "confidence_drift": 0.13997211211972319,
+      "confidence_drift_flag": true
+    },
+    {
+      "corruption": "brightness_up",
+      "severity": 3,
+      "samples": 32,
+      "accuracy": 0.125,
+      "embedding_mmd": 0.026361514270126563,
+      "embedding_drift": false,
+      "pixel_mmd": 0.3296883349323503,
+      "pixel_drift": true,
+      "confidence_drift": 0.18924703083688535,
+      "confidence_drift_flag": true
+    },
+    {
+      "corruption": "downscale_upscale",
+      "severity": 1,
+      "samples": 32,
+      "accuracy": 0.09375,
+      "embedding_mmd": 0.0291971792954433,
+      "embedding_drift": false,
+      "pixel_mmd": 0.06887966080861307,
+      "pixel_drift": false,
+      "confidence_drift": 0.026151643739213068,
+      "confidence_drift_flag": false
+    },
+    {
+      "corruption": "downscale_upscale",
+      "severity": 2,
+      "samples": 32,
+      "accuracy": 0.0625,
+      "embedding_mmd": 0.05563479286045436,
+      "embedding_drift": true,
+      "pixel_mmd": 0.08016896664302076,
+      "pixel_drift": false,
+      "confidence_drift": 0.050298144010659435,
+      "confidence_drift_flag": true
+    },
+    {
+      "corruption": "downscale_upscale",
+      "severity": 3,
+      "samples": 32,
+      "accuracy": 0.0625,
+      "embedding_mmd": 0.13032458345233455,
+      "embedding_drift": true,
+      "pixel_mmd": 0.09048994915880204,
+      "pixel_drift": false,
+      "confidence_drift": 0.1935049024223494,
+      "confidence_drift_flag": true
+    },
+    {
+      "corruption": "gaussian_blur",
+      "severity": 1,
+      "samples": 32,
+      "accuracy": 0.0625,
+      "embedding_mmd": 0.011870501868834982,
+      "embedding_drift": false,
+      "pixel_mmd": 0.059229355560630914,
+      "pixel_drift": false,
+      "confidence_drift": 0.12290503772170025,
+      "confidence_drift_flag": true
+    },
+    {
+      "corruption": "gaussian_blur",
+      "severity": 2,
+      "samples": 32,
+      "accuracy": 0.0,
+      "embedding_mmd": 0.06185728214913189,
+      "embedding_drift": true,
+      "pixel_mmd": 0.08921347455899875,
+      "pixel_drift": false,
+      "confidence_drift": 0.17688385667025752,
+      "confidence_drift_flag": true
+    },
+    {
+      "corruption": "gaussian_blur",
+      "severity": 3,
+      "samples": 32,
+      "accuracy": 0.0,
+      "embedding_mmd": 0.12652515957588228,
+      "embedding_drift": true,
+      "pixel_mmd": 0.09601102416211882,
+      "pixel_drift": false,
+      "confidence_drift": 0.11074673837525731,
+      "confidence_drift_flag": true
+    },
+    {
+      "corruption": "jpeg_quality",
+      "severity": 1,
+      "samples": 32,
+      "accuracy": 0.0625,
+      "embedding_mmd": 0.011088302759174828,
+      "embedding_drift": false,
+      "pixel_mmd": 0.002912009532628712,
+      "pixel_drift": false,
+      "confidence_drift": 0.1849393109987134,
+      "confidence_drift_flag": true
+    },
+    {
+      "corruption": "jpeg_quality",
+      "severity": 2,
+      "samples": 32,
+      "accuracy": 0.03125,
+      "embedding_mmd": 0.016964706243087768,
+      "embedding_drift": false,
+      "pixel_mmd": 0.04505659228404735,
+      "pixel_drift": false,
+      "confidence_drift": 0.1286450207326159,
+      "confidence_drift_flag": true
+    },
+    {
+      "corruption": "jpeg_quality",
+      "severity": 3,
+      "samples": 32,
+      "accuracy": 0.0625,
+      "embedding_mmd": 0.010225951440032688,
+      "embedding_drift": false,
+      "pixel_mmd": 0.002125549620756839,
+      "pixel_drift": false,
+      "confidence_drift": 0.19235845920760036,
+      "confidence_drift_flag": true
+    },
+    {
+      "corruption": "motion_blur",
+      "severity": 1,
+      "samples": 32,
+      "accuracy": 0.0625,
+      "embedding_mmd": 0.03568555865194001,
+      "embedding_drift": false,
+      "pixel_mmd": 0.03922612858380736,
+      "pixel_drift": false,
+      "confidence_drift": 0.1597580807101154,
+      "confidence_drift_flag": true
+    },
+    {
+      "corruption": "motion_blur",
+      "severity": 2,
+      "samples": 32,
+      "accuracy": 0.03125,
+      "embedding_mmd": 0.08486120335032354,
+      "embedding_drift": true,
+      "pixel_mmd": 0.05180106081732405,
+      "pixel_drift": false,
+      "confidence_drift": 0.33555015825236506,
+      "confidence_drift_flag": true
+    },
+    {
+      "corruption": "motion_blur",
+      "severity": 3,
+      "samples": 32,
+      "accuracy": 0.0,
+      "embedding_mmd": 0.18189562411172244,
+      "embedding_drift": true,
+      "pixel_mmd": 0.06618792265530637,
+      "pixel_drift": false,
+      "confidence_drift": 0.2665385198197305,
+      "confidence_drift_flag": true
+    }
+  ]
+}

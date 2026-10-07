@@ -13,21 +13,24 @@ from torchvision.models import (
 NUM_CLASSES = 37
 
 
-def create_model(name: str, num_classes: int = NUM_CLASSES):
+def create_model(name: str, num_classes: int = NUM_CLASSES, pretrained: bool = True):
     name = name.lower()
 
     if name == "resnet18":
-        model = resnet18(weights=ResNet18_Weights.DEFAULT)
+        weights = ResNet18_Weights.DEFAULT if pretrained else None
+        model = resnet18(weights=weights)
         model.fc = nn.Linear(model.fc.in_features, num_classes)
         return model
 
     if name == "resnet50":
-        model = resnet50(weights=ResNet50_Weights.DEFAULT)
+        weights = ResNet50_Weights.DEFAULT if pretrained else None
+        model = resnet50(weights=weights)
         model.fc = nn.Linear(model.fc.in_features, num_classes)
         return model
 
     if name == "mobilenet_v3_small":
-        model = mobilenet_v3_small(weights=MobileNet_V3_Small_Weights.DEFAULT)
+        weights = MobileNet_V3_Small_Weights.DEFAULT if pretrained else None
+        model = mobilenet_v3_small(weights=weights)
         model.classifier[-1] = nn.Linear(
             model.classifier[-1].in_features,
             num_classes,

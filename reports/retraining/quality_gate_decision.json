@@ -1,0 +1,16 @@
+{
+  "accepted": true,
+  "production_top_1_accuracy": 0.1,
+  "candidate_top_1_accuracy": 0.9184782608695652,
+  "required_candidate_top_1_accuracy": 0.09000000000000001,
+  "minimum_delta": -0.01,
+  "delta": 0.8184782608695652,
+  "model": "resnet18",
+  "candidate_report": "reports\\retraining\\candidate_evaluation.json",
+  "checkpoint_path": "artifacts\\retraining\\candidate\\resnet18_best.pt",
+  "baseline_source": "artifact:reports\\quality_baseline.json",
+  "registered_model_name": "PetBreedClassifier",
+  "production_alias": "Production",
+  "promoted_version": 7,
+  "mlflow_run_id": "0caab1ec87a54884b9549c014554aed0"
+}
