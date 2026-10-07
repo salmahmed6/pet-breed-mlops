@@ -18,7 +18,7 @@
       "embedding_drift": false,
       "pixel_mmd": 0.07218238982447267,
       "pixel_drift": false,
-      "confidence_drift": 0.10651154746932595,
+      "confidence_drift": 0.10651152660005891,
       "confidence_drift_flag": true
     },
     {
@@ -30,7 +30,7 @@
       "embedding_drift": false,
       "pixel_mmd": 0.3846441937306537,
       "pixel_drift": true,
-      "confidence_drift": 0.07205618063901471,
+      "confidence_drift": 0.07205601141330918,
       "confidence_drift_flag": true
     },
     {
@@ -42,7 +42,7 @@
       "embedding_drift": false,
       "pixel_mmd": 0.8002785359488929,
       "pixel_drift": true,
-      "confidence_drift": 0.19135922747157932,
+      "confidence_drift": 0.19135922151266316,
       "confidence_drift_flag": true
     },
     {
@@ -54,7 +54,7 @@
       "embedding_drift": false,
       "pixel_mmd": 0.04454289586032534,
       "pixel_drift": false,
-      "confidence_drift": 0.001326114928485071,
+      "confidence_drift": 0.0013261191937604618,
       "confidence_drift_flag": false
     },
     {
@@ -66,7 +66,7 @@
       "embedding_drift": false,
       "pixel_mmd": 0.17104819996120346,
       "pixel_drift": true,
-      "confidence_drift": 0.13997206379433874,
+      "confidence_drift": 0.13997211211972319,
       "confidence_drift_flag": true
     },
     {
@@ -78,7 +78,7 @@
       "embedding_drift": false,
       "pixel_mmd": 0.3296883349323503,
       "pixel_drift": true,
-      "confidence_drift": 0.18924692041407237,
+      "confidence_drift": 0.18924703083688535,
       "confidence_drift_flag": true
     },
     {
@@ -90,7 +90,7 @@
       "embedding_drift": false,
       "pixel_mmd": 0.06887966080861307,
       "pixel_drift": false,
-      "confidence_drift": 0.026151604248280846,
+      "confidence_drift": 0.026151643739213068,
       "confidence_drift_flag": false
     },
     {
@@ -102,7 +102,7 @@
       "embedding_drift": true,
       "pixel_mmd": 0.08016896664302076,
       "pixel_drift": false,
-      "confidence_drift": 0.05029810264553792,
+      "confidence_drift": 0.050298144010659435,
       "confidence_drift_flag": true
     },
     {
@@ -114,7 +114,7 @@
       "embedding_drift": true,
       "pixel_mmd": 0.09048994915880204,
       "pixel_drift": false,
-      "confidence_drift": 0.19350483329250565,
+      "confidence_drift": 0.1935049024223494,
       "confidence_drift_flag": true
     },
     {
@@ -126,7 +126,7 @@
       "embedding_drift": false,
       "pixel_mmd": 0.059229355560630914,
       "pixel_drift": false,
-      "confidence_drift": 0.12290496574694569,
+      "confidence_drift": 0.12290503772170025,
       "confidence_drift_flag": true
     },
     {
@@ -138,7 +138,7 @@
       "embedding_drift": true,
       "pixel_mmd": 0.08921347455899875,
       "pixel_drift": false,
-      "confidence_drift": 0.17688387207740516,
+      "confidence_drift": 0.17688385667025752,
       "confidence_drift_flag": true
     },
     {
@@ -150,7 +150,7 @@
       "embedding_drift": true,
       "pixel_mmd": 0.09601102416211882,
       "pixel_drift": false,
-      "confidence_drift": 0.11074678805221608,
+      "confidence_drift": 0.11074673837525731,
       "confidence_drift_flag": true
     },
     {
@@ -162,7 +162,7 @@
       "embedding_drift": false,
       "pixel_mmd": 0.002912009532628712,
       "pixel_drift": false,
-      "confidence_drift": 0.18493925502074512,
+      "confidence_drift": 0.1849393109987134,
       "confidence_drift_flag": true
     },
     {
@@ -174,7 +174,7 @@
       "embedding_drift": false,
       "pixel_mmd": 0.04505659228404735,
       "pixel_drift": false,
-      "confidence_drift": 0.12864492750061146,
+      "confidence_drift": 0.1286450207326159,
       "confidence_drift_flag": true
     },
     {
@@ -184,9 +184,9 @@
       "accuracy": 0.0625,
       "embedding_mmd": 0.010225951440032688,
       "embedding_drift": false,
-      "pixel_mmd": 0.0021255496207570612,
+      "pixel_mmd": 0.002125549620756839,
       "pixel_drift": false,
-      "confidence_drift": 0.19235836935501344,
+      "confidence_drift": 0.19235845920760036,
       "confidence_drift_flag": true
     },
     {
@@ -198,7 +198,7 @@
       "embedding_drift": false,
       "pixel_mmd": 0.03922612858380736,
       "pixel_drift": false,
-      "confidence_drift": 0.1597579392773955,
+      "confidence_drift": 0.1597580807101154,
       "confidence_drift_flag": true
     },
     {
@@ -210,7 +210,7 @@
       "embedding_drift": true,
       "pixel_mmd": 0.05180106081732405,
       "pixel_drift": false,
-      "confidence_drift": 0.33555011139609703,
+      "confidence_drift": 0.33555015825236506,
       "confidence_drift_flag": true
     },
     {
@@ -222,7 +222,7 @@
       "embedding_drift": true,
       "pixel_mmd": 0.06618792265530637,
       "pixel_drift": false,
-      "confidence_drift": 0.26653851578107735,
+      "confidence_drift": 0.2665385198197305,
       "confidence_drift_flag": true
     }
   ]
